@@ -32,7 +32,7 @@ export async function getPlaylist(res, req) {
 }
 
 export async function login(res,req,email){
-let     result = await scanItem('User', "javare660@gmail.com", 'Email')
+let     result = await getItem('User', "javare660@gmail.com", 'Email')
 
     res.send(result)
 
