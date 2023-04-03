@@ -18,11 +18,7 @@ const client = new DynamoDBClient({
 });
 
 
-export function login(user){
 
-
-
-}
 export function addItem(table, addItem) {
 
 
@@ -118,14 +114,14 @@ console.log(command)
 
 }
 
-export async function scanItem(){
+export async function getUserByEmail(email){
 
-  keyItem={[`:${IdKey}`]:{ "S":keyItem}}
+  let keyItem={":Email":{ "S":email}}
   const command = new QueryCommand({
-    TableName: table,
-    FilterExpression: `#${IdKey} = :${IdKey}`,
+    TableName: "User",
+    FilterExpression: `#Email = :Email`,
     ExpressionAttributeNames: {
-      [`#${IdKey}`]: IdKey
+      "#Email": "Email"
     },
    
     ExpressionAttributeValues: keyItem

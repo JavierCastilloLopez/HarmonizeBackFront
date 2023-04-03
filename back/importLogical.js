@@ -1,4 +1,4 @@
-import { addItem, deleteItem, getTable, getItem, scanItem} from "./conexinBD.js"
+import { addItem, deleteItem, getTable, getItem, getUserByEmail} from "./conexinBD.js"
 
 
 
@@ -32,7 +32,7 @@ export async function getPlaylist(res, req) {
 }
 
 export async function login(res,req,email){
-let     result = await getItem('User', "javare660@gmail.com", 'Email')
+let     result = await getUserByEmail('User', "javare660@gmail.com", 'Email')
 
     res.send(result)
 
