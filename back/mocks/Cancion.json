@@ -1,0 +1,10 @@
+{
+    "idCancion": 123,
+    "nombreCancion": "La Bicicleta",
+    "artista": "Carlos Vives ft. Shakira",
+    "imagen": "https://via.placeholder.com/50x50",
+    "fotoArtista": "https://example.com/carlos-vives.jpg",
+    "votacion": 4.5,
+    "rutaCancion": "/src/mocks/arnau.mp3"
+  }
+ 

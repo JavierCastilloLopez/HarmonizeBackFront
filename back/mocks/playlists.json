@@ -1,0 +1,28 @@
+{
+    "playlists": [
+        {
+            "name": "Summer Vibes",
+            "id": "PLxR5yLQFGZHwzS5Y5sk-44X9XnA4Z0Q4m"
+        },
+        {
+            "name": "Classical Study Mix",
+            "id": "PLxR5yLQFGZHybBqtG-DpZt5cL90-Maiy3"
+        },
+        {
+            "name": "Throwback Jams",
+            "id": "PLxR5yLQFGZHziRlgzY39I1p6duOnC7nZp"
+        },
+        {
+            "name": "EDM Party",
+            "id": "PLxR5yLQFGZHwLHddI3qWkNwTTgRV7Q_Gs"
+        },
+        {
+            "name": "Chill Indie",
+            "id": "PLxR5yLQFGZHwUj0jiKGyCf2rAryEj_6iX"
+        },
+        {
+            "name": "Hip Hop Hits",
+            "id": "PLxR5yLQFGZHzn9XruRtjz_X_5ziw1MJeL"
+        }
+    ]
+}

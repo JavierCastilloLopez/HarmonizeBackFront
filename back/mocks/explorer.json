@@ -1,0 +1,139 @@
+{
+  "canciones": [
+    {
+      "id": "1",
+      "title": "Bohemian Rhapsody",
+      "artist": "Queen",
+      "genre": "Rock",
+      "image": "img/images.jpeg",
+      "time": "5:54",
+      "rutaFile": "canciones/bohemian-rhapsody.mp3"
+    },
+    {
+      "id": "2",
+      "title": "Stairway to Heaven",
+      "artist": "Led Zeppelin",
+      "genre": "Rock",
+      "image": "img/91802@2x.jpg",
+      "time": "8:02",
+      "rutaFile": "canciones/stairway-to-heaven.mp3"
+    },
+    {
+      "id": "3",
+      "title": "Billie Jean",
+      "artist": "Michael Jackson",
+      "genre": "Pop",
+      "image": "img/billie-jean.jpg",
+      "time": "4:54",
+      "rutaFile": "canciones/billie-jean.mp3"
+    },
+    {
+      "id": "4",
+      "title": "Smooth",
+      "artist": "Santana feat. Rob Thomas",
+      "genre": "Rock",
+      "image": "img/smooth.jpg",
+      "time": "4:56",
+      "rutaFile": "canciones/smooth.mp3"
+    },
+    {
+      "id": "5",
+      "title": "Despacito",
+      "artist": "Luis Fonsi feat. Daddy Yankee",
+      "genre": "Latin",
+      "image": "img/despacito.jpg",
+      "time": "3:47",
+      "rutaFile": "canciones/despacito.mp3"
+    },
+    {
+      "id": "6",
+      "title": "Smells Like Teen Spirit",
+      "artist": "Nirvana",
+      "genre": "Grunge",
+      "image": "img/smells-like-teen-spirit.jpg",
+      "time": "5:01",
+      "rutaFile": "canciones/smells-like-teen-spirit.mp3"
+    },
+    {
+      "id": "7",
+      "title": "I Will Always Love You",
+      "artist": "Whitney Houston",
+      "genre": "Pop",
+      "image": "img/i-will-always-love-you.jpg",
+      "time": "4:32",
+      "rutaFile": "canciones/i-will-always-love-you.mp3"
+    },
+    {
+      "id": "8",
+      "title": "Imagine",
+      "artist": "John Lennon",
+      "genre": "Pop",
+      "image": "img/imagine.jpg",
+      "time": "3:03",
+      "rutaFile": "canciones/imagine.mp3"
+    },
+    {
+      "id": "9",
+      "title": "Shape of You",
+      "artist": "Ed Sheeran",
+      "genre": "Pop",
+      "image": "img/shape-of-you.jpg",
+      "time": "3:54",
+      "rutaFile": "canciones/shape-of-you.mp3"
+    },
+    {
+      "id": "10",
+      "title": "La Bamba",
+      "artist": "Ritchie Valens",
+      "genre": "Rock and Roll",
+      "image": "img/la-bamba.jpg",
+      "time": "2:08",
+      "rutaFile": "canciones/la-bamba.mp3"
+    },
+    {
+      "id": "11",
+      "title": "Crazy",
+      "artist": "Gnarls Barkley",
+      "genre": "Soul",
+      "image": "img/crazy.jpg",
+      "time": "2:58",
+      "rutaFile": "canciones/crazy.mp3"
+    },
+    {
+      "id": "12",
+      "title": "All I Want",
+      "artist": "Kodaline",
+      "genre": "Indie Rock",
+      "image": "img/all-i-want.jpg",
+      "time": "5:04",
+      "rutaFile": "canciones/all-i-want.mp3"
+    },
+    {
+      "id": "13",
+      "title": "Shape of My Heart",
+      "artist": "Sting",
+      "genre": "Pop",
+      "image": "img/shape-of-my-heart.jpg",
+      "time": "4:38",
+      "rutaFile": "canciones/shape-of-my-heart.mp3"
+    },
+    {
+      "id": "14",
+      "title": "The Middle",
+      "artist": "Zedd, Maren Morris, Grey",
+      "genre": "Pop",
+      "image": "img/the-middle.jpg",
+      "time": "3:05",
+      "rutaFile": "canciones/the-middle.mp3"
+    },
+    {
+      "id": "15",
+      "title": "Empire State of Mind",
+      "artist": "Jay-Z feat. Alicia Keys",
+      "genre": "Hip-Hop",
+      "image": "img/empire-state-of-mind.jpg",
+      "time": "4:37",
+      "rutaFile": "canciones/empire-state-of-mind.mp3"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  
+    "canciones": [
+      {
+        "id": 1,
+        "nombre": "Bohemian Rhapsody",
+        "artista": "Queen",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 2,
+        "nombre": "Stairway to Heaven",
+        "artista": "Led Zeppelin",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 3,
+        "nombre": "Sweet Child O' Mine",
+        "artista": "Guns N' Roses",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 4,
+        "nombre": "Smells Like Teen Spirit",
+        "artista": "Nirvana",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 5,
+        "nombre": "Billie Jean",
+        "artista": "Michael Jackson",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 6,
+        "nombre": "Hotel California",
+        "artista": "Eagles",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 7,
+        "nombre": "Imagine",
+        "artista": "John Lennon",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 8,
+        "nombre": "Purple Haze",
+        "artista": "Jimi Hendrix",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 9,
+        "nombre": "Hey Jude",
+        "artista": "The Beatles",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 10,
+        "nombre": "I Will Always Love You",
+        "artista": "Whitney Houston",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 11,
+        "nombre": "Like a Rolling Stone",
+        "artista": "Bob Dylan",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 12,
+        "nombre": "Smooth",
+        "artista": "Santana",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 13,
+        "nombre": "Don't Stop Believin'",
+        "artista": "Journey",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 14,
+        "nombre": "Wonderwall",
+        "artista": "Oasis",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      },
+      {
+        "id": 15,
+        "nombre": "Every Breath You Take",
+        "artista": "The Police",
+        "imagen": "https://via.placeholder.com/50x50",
+        "time":"345"
+      }
+    ]
+
+  }
+  

@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap');
+
+
+.sidebar-container {
+  font-family: Helvetica;
+  background-color: #f5f8fa;
+  margin: 0;
+  padding: 20px;
+  width: 300px;
+  height: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-overflow: ellipsis;
+  transition-duration: 0.5s;
+
+  transition-timing-function: ease-in-out;
+}
+
+.user-profile {
+  display: flexbox;
+ 
+}
+
+.profile-picture {
+  margin-top: 19.20px;
+  float: left;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  align-items: center;
+  
+
+}
+
+.profile-info {
+
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.premium {
+  font-size: 1rem;
+  background-color: #00a1f1;
+  color: #ffffff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 15rem;
+  text-align: center;
+  width: 100px;
+}
+
+
+.navbar-icon {
+  margin-right: 1rem;
+}
+
+.premium {
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+
+
+
+.premium-badge {
+  background-color: #1da1f2;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  padding: 5px 10px;
+  margin-left: auto;
+}
+h3{
+  width:max-content;
+}
+ul {
+  list-style: none;
+  margin-bottom: 5em;
+  padding: 0;
+  font-size: 1.1rem;
+  
+}
+
+li {
+  margin: 10px;
+}
+
+li>a {
+  color: #1da1f2;
+  text-decoration: none;
+  display: inline-block;
+}
+
+svg {
+  margin-right: 10px;
+}
+
+
+.active {
+  color: #1da1f2;
+  font-weight: bold;
+}
+
+.sidebar-container {
+  /* Estilos para la lista de elementos */
+  padding-top: 1rem;
+  /* Agregar 1 rem de espacio en la parte superior */
+  padding-bottom: 1rem;
+  /* Agregar 1 rem de espacio en la parte inferior */
+}
+
+.sidebar-container li {
+  /* Estilos para cada elemento de la lista */
+  margin-bottom: 0.5rem;
+  /* Agregar 0.5 rem de margen inferior */
+}
+
+.playlist-item-a {
+  display: inline-block;
+  /* Estilos para cada elemento de la lista de playlist */
+  white-space: nowrap;
+  color: #333333;
+  
+  /* Evitar que el texto se ajuste a varias líneas */
+  /* Agregar puntos suspensivos al final del texto truncado */
+}
+a:hover{
+transform:scale(1.2);
+transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+.playlist-name {
+  /* Estilos para el nombre de la playlist */
+  display: inline-block;
+  /* Convertir el elemento span en un bloque de nivel en línea */
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+
+  /* Establecer el ancho máximo del elemento para evitar que se desborde */
+}
+.animated {
+  animation-name: apearProfile ;
+  animation-duration: 1s;
+}
+.sidebar-container.false>div,
+  .sidebar-container.false>ul {
+    
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+    
+    
+  }
+@media (max-width: 1100px) {
+
+  .sidebar-container.false>div,
+  .sidebar-container.false>ul {
+    transform: translateX(-500px) ;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+    opacity: 0
+    
+  }
+  
+  
+  .profile-picture-animated{
+    animation-name: apearPicture;
+    animation-duration: 1s;
+    
+  }
+  
+  .sidebar-container.false {
+    width: 100px;
+
+    transition-timing-function: ease-in-out
+  }
+
+}
+@keyframes apearPicture {
+  0%{
+    transform: translateX(0px)
+  }
+  50%{
+    transform: translateX(-500px) ;
+  }
+  100%{
+    transform: translateX(0px) ;
+  }
+  
+  
+}
+@keyframes apearProfile{
+  0%{
+    transform: translateX(-500px)
+  }
+  50%{
+    transform: translateX(-500px) ;
+  }
+  100%{
+    transform: translateX(00px) ;
+  }
+}

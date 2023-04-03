@@ -1,0 +1,159 @@
+{
+    "Rock": [
+      {
+        "id": "1",
+        "title": "Bohemian Rhapsody",
+        "artist": "Queen",
+        "artistImage": "https://www.example.com/images/queen.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "2",
+        "title": "Stairway to Heaven",
+        "artist": "Led Zeppelin",
+        "artistImage": "https://www.example.com/images/led-zeppelin.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      }
+    ],
+    "Pop": [
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "3",
+        "title": "Shape of You",
+        "artist": "Ed Sheeran",
+        "artistImage": "https://www.example.com/images/ed-sheeran.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      },
+      {
+        "id": "4",
+        "title": "Uptown Funk",
+        "artist": "Mark Ronson ft. Bruno Mars",
+        "artistImage": "https://www.example.com/images/mark-ronson.jpg",
+        "image": "https://via.placeholder.com/50x50",
+        "time":355
+      }
+    ]
+  }
+  

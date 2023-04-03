@@ -1,0 +1,93 @@
+[
+    {
+        "id": "1",
+        "nombre": "Bohemian Rhapsody",
+        "artista": "Queen",
+        "imagen": "img/images.jpeg",
+        "time": "5:54"
+    },
+    {
+        "id": "10",
+        "nombre": "La Bamba",
+        "artista": "Ritchie Valens",
+        "imagen": "img/la-bamba.jpg",
+        "time": "2:08"
+    },
+    {
+        "id": "11",
+        "nombre": "Crazy",
+        "artista": "Gnarls Barkley",
+        "imagen": "img/crazy.jpg",
+        "time": "2:58"
+    },
+    {
+        "id": "12",
+        "nombre": "All I Want",
+        "artista": "Kodaline",
+        "imagen": "img/all-i-want.jpg",
+        "time": "5:04"
+    },
+    {
+        "id": "13",
+        "nombre": "Shape of My Heart",
+        "artista": "Sting",
+        "imagen": "img/shape-of-my-heart.jpg",
+        "time": "4:38"
+    },
+    {
+        "id": "2",
+        "nombre": "Stairway to Heaven",
+        "artista": "Led Zeppelin",
+        "imagen": "img/91802@2x.jpg",
+        "time": "8:02"
+    },
+    {
+        "id": "3",
+        "nombre": "Billie Jean",
+        "artista": "Michael Jackson",
+        "imagen": "img/billie-jean.jpg",
+        "time": "4:54"
+    },
+    {
+        "id": "4",
+        "nombre": "Smooth",
+        "artista": "Santana feat. Rob Thomas",
+        "imagen": "img/smooth.jpg",
+        "time": "4:56"
+    },
+    {
+        "id": "5",
+        "nombre": "Despacito",
+        "artista": "Luis Fonsi feat. Daddy Yankee",
+        "imagen": "img/despacito.jpg",
+        "time": "3:47"
+    },
+    {
+        "id": "6",
+        "nombre": "Smells Like Teen Spirit",
+        "artista": "Nirvana",
+        "imagen": "img/smells-like-teen-spirit.jpg",
+        "time": "5:01"
+    },
+    {
+        "id": "7",
+        "nombre": "I Will Always Love You",
+        "artista": "Whitney Houston",
+        "imagen": "img/i-will-always-love-you.jpg",
+        "time": "4:32"
+    },
+    {
+        "id": "8",
+        "nombre": "Imagine",
+        "artista": "John Lennon",
+        "imagen": "img/imagine.jpg",
+        "time": "3:03"
+    },
+    {
+        "id": "9",
+        "nombre": "Shape of You",
+        "artista": "Ed Sheeran",
+        "imagen": "img/shape-of-you.jpg",
+        "time": "3:54"
+    }
+]
