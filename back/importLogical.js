@@ -1,8 +1,7 @@
 import { addItem, deleteItem, getTable, getItem, getUserByEmail } from "./conexinBD.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
-dotenv.config()
+
 
 export async function getPlaylist(req, res) {
     const Songs = await getItem('Playlist', req.params.id, 'IdPlaylist')
@@ -67,7 +66,7 @@ export async function login(req, res) {
 
         },
             process.env.TOKEN_SECRET, {
-            expiresIn: '48h'
+            expiresIn: process.env.Time_Session
         }
         )
 
@@ -80,4 +79,7 @@ export async function login(req, res) {
 
 }
 
-export async function register(req,res)
+export async function register(req,res){
+   
+
+}
