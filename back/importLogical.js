@@ -1,8 +1,10 @@
-import { addItem, deleteItem, getTable, getItem, getUserByEmail} from "./conexinBD.js"
+import { addItem, deleteItem, getTable, getItem, getUserByEmail } from "./conexinBD.js"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
 
-
-
-export async function getPlaylist(res, req) {
+export async function getPlaylist(req, res) {
     const Songs = await getItem('Playlist', req.params.id, 'IdPlaylist')
     let JsonSongs
 
@@ -12,7 +14,7 @@ export async function getPlaylist(res, req) {
         let indice = 0
         for (const IdCancion of data) {
             result = await getItem('Cancion', IdCancion, 'IdCancion')
-            DataA[indice] =  {
+            DataA[indice] = {
                 "id": parseInt(result[0].IdCancion.S),
                 "nombre": result[0].title.S,
                 "artista": result[0].artist.S,
@@ -21,8 +23,8 @@ export async function getPlaylist(res, req) {
             }
             indice++
         }
-        DataA.sort((a,b)=>{return a.id-b.id})
-        return  DataA
+        DataA.sort((a, b) => { return a.id - b.id })
+        return DataA
     }
     console.log(Songs)
     JsonSongs = await getData(Songs[0].Canciones.SS)
@@ -31,10 +33,51 @@ export async function getPlaylist(res, req) {
 
 }
 
-export async function login(res,req,email){
-let     result = await getUserByEmail('User', "javare660@gmail.com", 'Email')
+export async function login(req, res) {
+    let data = req.body
+    console.log(data)
+    const userBD = await getUserByEmail(data.email)
+    console.log(userBD.password)
+    if (!userBD) {
+        return res.status(400).json({
+            ok: false,
+            err: {
+                message: 'Usuario o contraseña incorrecto'
+            }
+        }
+        )
 
-    res.send(result)
 
-    
+
+    }
+    if (!bcrypt.compareSync(data.password, userBD.password.S)) {
+        return res.status(400).json({
+            ok: false,
+            err: {
+                message: 'Usuario o contraseña incorrecto'
+            }
+        }
+        )
+
+    }
+   
+ 
+        let token = jwt.sign({
+            usuario: userBD,
+
+        },
+            process.env.TOKEN_SECRET, {
+            expiresIn: '48h'
+        }
+        )
+
+   
+        res.header('auth-token', token).json({
+            error: null,
+            data: {token}
+        })
+
+
 }
+
+export async function register(req,res)

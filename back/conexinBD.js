@@ -117,7 +117,7 @@ console.log(command)
 export async function getUserByEmail(email){
 
   let keyItem={":Email":{ "S":email}}
-  const command = new QueryCommand({
+  const command = new ScanCommand({
     TableName: "User",
     FilterExpression: `#Email = :Email`,
     ExpressionAttributeNames: {
@@ -127,14 +127,17 @@ export async function getUserByEmail(email){
     ExpressionAttributeValues: keyItem
 
   });
-console.log(command)
+ 
+
   // Ejecutar el comando y procesar los resultados
   return await client.send(command)
     .then(data => {
-      return (data.Items);
+     
+      return (data.Items[0]);
     })
     .catch(error => {
       console.error("Error al escanear la tabla:",error);
+      return error
     });
 
 
