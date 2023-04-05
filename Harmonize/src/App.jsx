@@ -1,23 +1,23 @@
 
 import { Playlist } from './Playlist.jsx'
-import {canciones} from './mocks/playlist.json'
+import { canciones } from './mocks/playlist.json'
 import { useState } from "react"
 import { Explorer } from './Explorer.jsx';
 import { Reproductor } from './reproductor.jsx';
-
+import {Login,Register} from './Session.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { Navbar } from './Navbar.jsx';
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
-  const [rootDirectory,setDirectory]=useState(document.location.origin.split("/",3)[2])
-  
+  const [user, setLoged] = useState({ loged: false })
+
   return (
     <Router>
-      <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar}/>
+      <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} user={user} />
       <div className={`main ${showNavbar && 'expanded'}`}>
-      <Routes>
+        {<Routes>
         <Route path="/playlist/:idPlaylist/:actualPlaylist" element={<Playlist canciones={canciones}/>}>
           
         </Route>
@@ -29,15 +29,23 @@ function App() {
         <Route path="/:actualPlaylist" element={<Explorer/>}>
         
         </Route>
-        <Route path="/" element={<Playlist canciones={canciones}/>}>
+          <Route path="/login" element={<Login setLoged={setLoged}/>}>
+        
+        </Route>
+        <Route path="/register" element={<Register/>}>
+        
+        </Route>
+        
+        
+        <Route path="/" element={<Explorer canciones={canciones}/>}>
         
         </Route>
      
           
         
-      </Routes>
+      </Routes>}
       </div>
-      <Reproductor/>
+      {<Reproductor/>}
     </Router>
   );
 }

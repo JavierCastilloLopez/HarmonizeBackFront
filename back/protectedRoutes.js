@@ -26,10 +26,7 @@ function main(action, res,req) {
       case 'bd/playlist':
         getPlaylist(res,req)
         break;
-      case "login":
-        console.log("hola")
-        login(res,req)
-        break;
+      
   
       default:
         return 'error404'

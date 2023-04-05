@@ -8,6 +8,7 @@ import {
   QueryCommand
 
 } from "@aws-sdk/client-dynamodb";
+import { v4 as uuidv4 } from 'uuid';
 
 const client = new DynamoDBClient({
   region: "eu-west-3",
@@ -23,7 +24,7 @@ export function addItem(table, addItem) {
 
 
 
-
+console.log(addItem)
 
   const command = new PutItemCommand({
     TableName: table,
@@ -32,12 +33,12 @@ export function addItem(table, addItem) {
   });
 
   // Ejecutar el comando y procesar los resultados
-  client.send(command)
+  return client.send(command)
     .then(data => {
-      console.log('generado');
+      return data;
     })
     .catch(error => {
-      console.error("Error al escanear la tabla:");
+      console.error(error);
     });
 
 }
@@ -132,11 +133,11 @@ export async function getUserByEmail(email){
   // Ejecutar el comando y procesar los resultados
   return await client.send(command)
     .then(data => {
-     
+     console.log(data)
       return (data.Items[0]);
     })
     .catch(error => {
-      console.error("Error al escanear la tabla:",error);
+      console.error(error);
       return error
     });
 
