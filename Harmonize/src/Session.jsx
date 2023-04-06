@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import './css/Session.css'
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 export function Login({ setLoged }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,7 +41,7 @@ export function Login({ setLoged }) {
                     .then(response => response.json())
                     .then(async (data) => {
                         if (data.ok) {
-                            await setLoged({ loged: true, headers: { 'Content-Type': 'application/json', 'auth-token': data.data.token } })
+                            Cookies.set('token', data.data.token, { expires: 2 });
                             navigate('/')
                         } else {
                             setErrors({ email: data.err.message, email: data.err.message })
@@ -108,39 +110,50 @@ export function Login({ setLoged }) {
 
 
 
+
 export function Register() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
-    const schema = Yup.object().shape({
-        email: Yup.string()
-            .email('Correo electrónico inválido')
-            .required('Ingrese su correo electrónico'),
-        password: Yup.string()
-            .min(8, 'La contraseña debe tener al menos 8 caracteres')
-            .required('Ingrese su contraseña'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden. Inténtalo de nuevo.'),
+    const [values, setValues] = useState({
+        email: '',
+        name: '',
+        password: '',
+        passwordConfirmation: '',
+        age: '01-01-1900'
     });
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value.toLowerCase());
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 18);
+
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 100);
+
+    const [errors, setErrors] = useState({});
+
+    const schema = Yup.object().shape({
+        email: Yup.string().email('Ingresa un correo electrónico válido').required('El correo electrónico es obligatorio'),
+        name: Yup.string().required('El nombre es obligatorio'),
+        password: Yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es obligatoria'),
+        passwordConfirmation: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir')
+            .required('Las contraseñas no coinciden'),
+        age: Yup.date()
+            .max(maxDate, 'Debes tener como mínimo 18 años')
+            .min(minDate, 'Ingresa una fecha válida')
+            .required('Ingresa tu fecha de nacimiento')
+    });
+
+    const handleChange = (event) => {
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        });
     };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-    const handleConfirmPasswordChange = (e) => {
-        setConfirmPassword(e.target.value);
-    };
+    const handleSubmit = (event) => {
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let values = { email, password,confirmPassword }
-        try {
-            await schema.validate(values, { abortEarly: false }).then(() => {
+        event.preventDefault();
+
+        schema.validate(values, { abortEarly: false })
+            .then(() => {
                 fetch('http://localhost:3000/register', {
                     method: 'POST',
                     headers: {
@@ -148,86 +161,59 @@ export function Register() {
                     },
                     body: JSON.stringify(values)
                 })
-                    .then(response => response.json())
-                    .then(async (data) => {
-                        if (data.ok) {
-                            await setLoged({ loged: true, headers: { 'Content-Type': 'application/json', 'auth-token': data.data.token } })
-                            navigate('/')
-                        } else {
-                           console.log(data)
+                    .then(response =>response.json())
+                    .then(data =>{ console.log(data)
+                        setErrors({})
+                    if(data.error){
+                        setErrors({
+                            
+                            ['email']:data.error[0]
+                        })
+                    }}
+                            )
+                    
+                    
 
-
-                        }
-
-                    })
-                    .catch(error => console.error(error));
-            });
-
-        } catch (error) {
-            if (error.inner) {
-                const newErrors = {};
-                error.inner.forEach((err) => {
-                    console.log(err.message)
-                    newErrors[err.path] = err.message;
+                    
+                
+            })
+            .catch(errors => {
+                const validationErrors = {};
+                errors.inner.forEach(error => {
+                    validationErrors[error.path] = error.message;
                 });
-                setErrors(newErrors);
-            }
-        }
+                setErrors(validationErrors);
+            });
     };
-
-    const emailClassName = errors.email ? 'input-error' : '';
-    const passwordClassName = errors.password ? 'input-error' : '';
-    const confirmPasswordClassName = errors.confirmPassword ? 'input-error' : '';
 
     return (
         <div className='Session'>
+            <div className='register'>
+                <form onSubmit={handleSubmit} className=' form'>
+                    <label htmlFor="email">Register</label>
 
 
+                    <input type="email" className='input' placeholder='ejemplo@ejemplo.com' name="email" value={values.email} onChange={handleChange} />
+                    {errors.email && <div className="error-message">{errors.email}</div>}
 
 
+                    <input type="text" className='input' placeholder='Name' name="name" value={values.name} onChange={handleChange} />
+                    {errors.name && <div className="error-message">{errors.name}</div>}
 
 
-            <div className="loginForm">
-                <form onSubmit={handleSubmit} className='form'>
-                    <label aria-hidden="true">Log in</label>
+                    <input type="password" className='input' placeholder='Contraseña' name="password" value={values.password} onChange={handleChange} />
+                    {errors.password && <div className="error-message">{errors.password}</div>}
 
-                    <input
-                        placeholder="Email"
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        className={`${emailClassName} input`}
-                    />
-                    <span className="error-message">{errors.email}</span>
+                    <input type="password" className='input' placeholder='Confirma la contraseña' name="passwordConfirmation" value={values.confirmPassword} onChange={handleChange} />
+                    {errors.passwordConfirmation && <div className="error-message">{errors.passwordConfirmation}</div>}
 
 
-
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className={`${passwordClassName} input`}
-                    />
-                    <span className="error-message">{errors.Password}</span>
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                        className={`${confirmPasswordClassName} input`}
-                    />
-                    <span className="error-message">{errors.confirmPassword}</span>
-
-
-                    <button type="submit" className='submitLoginForm' >Registrarse</button>
+                    <input type="date" className='input' name="age" value={values.age} onChange={handleChange} />
+                    {errors.age && <div className="error-message">{errors.age}</div>}
+                    <button type="submit">register</button>
+                  
                 </form>
             </div>
-
         </div>
-    );
-
-
-    return
-
+    )
 }

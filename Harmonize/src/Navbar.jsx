@@ -1,19 +1,20 @@
 import { useState } from "react"
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic, faList, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faMusic, faList, faUser, faPlus} from '@fortawesome/free-solid-svg-icons';
 import { playlists } from './mocks/playlists.json'
+import Cookies from 'js-cookie';
 import './css/Navbar.css'
-export function Navbar({ showNavbar, setShowNavbar,user }) {
+export function Navbar({ showNavbar, setShowNavbar }) {
 
-  if(user.loged){
+  if(Cookies.get('token')){
     return (<LogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />)
 
   }
   return (<NoLogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />)
 }
 function LogedNavbar({ showNavbar, setShowNavbar }) {
-
+  
   const [animated, setAnimated] = useState(false)
   const animar = () => {
     setAnimated(true)
@@ -65,7 +66,10 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
         </ul>
         {(
           <div className={`playlist-container ${animated && 'animated'}`}>
-            <h4>Listas de reproducción</h4>
+            <h4>Listas de reproducción 
+            
+            </h4>
+           
             <ul>
               {playlists.map((playlist) => (
                 <li className="playlist-item" key={playlist.id}>
@@ -75,6 +79,12 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
                   </Link>
                 </li>
               ))}
+              <li className="playlist-item" >
+                  <Link className='playlist-item-a'>
+                    <FontAwesomeIcon icon={faPlus} />
+                    <span className="playlist-name">Nueva playlist</span>
+                  </Link>
+                </li>
             </ul>
           </div>
         )}

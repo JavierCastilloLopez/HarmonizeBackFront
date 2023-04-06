@@ -72,9 +72,11 @@ function GenreSection({ genre }) {
             <div>
                 <h2>{genre}</h2>
                 <div className="song-card-container">
-                    {songs[genre].map((song) => (
+                    {
+                    songs[genre].map((song) => (
                         <SongCard song={song} key={song.id} />
-                    ))}
+                    ))
+                    }
                 </div>
             </div>
         </div>

@@ -6,16 +6,21 @@ import { Explorer } from './Explorer.jsx';
 import { Reproductor } from './reproductor.jsx';
 import {Login,Register} from './Session.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 import { Navbar } from './Navbar.jsx';
-
+import {getUserData
+} from './fetch.js'
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
-  const [user, setLoged] = useState({ loged: false })
+  const [user,setUser]=useState({})
+  if(Cookies.get('token')){
+    getUserData('token',setUser)
 
+
+  }
   return (
     <Router>
-      <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} user={user} />
+      <Navbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />
       <div className={`main ${showNavbar && 'expanded'}`}>
         {<Routes>
         <Route path="/playlist/:idPlaylist/:actualPlaylist" element={<Playlist canciones={canciones}/>}>
@@ -29,7 +34,7 @@ function App() {
         <Route path="/:actualPlaylist" element={<Explorer/>}>
         
         </Route>
-          <Route path="/login" element={<Login setLoged={setLoged}/>}>
+          <Route path="/login" element={<Login/>}>
         
         </Route>
         <Route path="/register" element={<Register/>}>

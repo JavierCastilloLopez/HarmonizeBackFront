@@ -5,8 +5,9 @@ import * as Yup from "yup"
 import YupPassword from 'yup-password';
 import { v4 as uuidv4 } from 'uuid';
 
+
 YupPassword(Yup);
-const { object, string, number, boolean }=Yup
+const { object, string, number, boolean } = Yup
 
 export async function getPlaylist(req, res) {
     const Songs = await getItem('Playlist', req.params.id, 'IdPlaylist')
@@ -77,7 +78,7 @@ export async function login(req, res) {
 
 
     res.header('auth-token', token).json({
-        ok:true,
+        ok: true,
         err: null,
         data: { token }
     })
@@ -88,16 +89,20 @@ export async function login(req, res) {
 export async function register(req, res) {
     let data = req.body
 
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 18);
 
+    const minDate = new Date();
+    minDate.setFullYear(minDate.getFullYear() - 100);
     const schema = object({
         name: string()
             .required("El campo nombre es obligatorio")
             .min(1, "El nombre tiene que tener al menos un carácter")
             .max(100, "El nombre no puede superar los 100 carácteres"),
-        age: number()
-            .required("La edad es obligatoria")
-            .positive("La edad tiene que ser positiva")            
-            .max(90, "La edad no puede superar los 90"),
+        age: Yup.date()
+            .max(maxDate, 'Debes tener como mínimo 18 años')
+            .min(minDate, 'Ingresa una fecha válida')
+            .required('Ingresa tu fecha de nacimiento'),
         email: string()
             .required("El email es obligatorio")
             .email("El email no tiene un formato válido"),
@@ -114,39 +119,45 @@ export async function register(req, res) {
         passwordConfirmation: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Las contraseñas no coinciden. Inténtalo de nuevo.'),
 
-        
+
     });
 
-    if(! await getUserByEmail(data.email)){
+    if (! await getUserByEmail(data.email)) {
 
-    try{
+        try {
 
-        
-        await schema.validate(data);
 
-     }catch(err){
-      res.json(err)
-     }
-     const user={
- 
-        "Email": {
-          "S": data.email
-        },
-        "password": {
-          "S": bcrypt.hashSync(data.password, 10)
-        },
-        "name": {
-          "S": data.name
-        },
-        "age": {
-          "N": `${data.age}`
-        },
-        "IdUser": {
-          "S":uuidv4()
+            await schema.validate(data);
+
+        } catch (err) {
+            res.json(err)
         }
-      }
-     res.json( await addItem('User',user))
-    }else{
-        res.json({error:["El correo ya esta registrado"]})
+        const user = {
+
+            "Email": {
+                "S": data.email
+            },
+            "password": {
+                "S": bcrypt.hashSync(data.password, 10)
+            },
+            "name": {
+                "S": data.name
+            },
+            "age": {
+                "N": `${new Date(data.age).getTime()}`
+            },
+            "IdUser": {
+                "S": uuidv4()
+            }
+        }
+        res.json(await addItem('User', user))
+    } else {
+        res.json({ error: ["El correo ya esta registrado"] })
     }
+}
+
+export async function getUserData(req, res) {
+    res.json(await getUserByEmail(jwt.decode(req.header('auth-token')).usuario.Email.S))
+
+
 }

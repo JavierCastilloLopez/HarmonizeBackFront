@@ -4,11 +4,12 @@ import './css/playlist.css'
 import { Cancion } from './Cancion.jsx'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPlaylist } from './fetch';
+
 export function Playlist() {
   const [load,setLoad]=useState(false)
   const [canciones,setCanciones]=useState([])
   const [rootDirectory,setDirectory]=useState(document.location.origin.split(":")[1])
+  
   const {idPlaylist}=useParams()
   
   if(!load)
