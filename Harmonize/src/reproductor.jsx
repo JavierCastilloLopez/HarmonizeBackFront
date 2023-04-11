@@ -1,17 +1,38 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import './css/reproductor.css'
-import cancion from "./mocks/Cancion.json";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlay, faBackward, faForward, faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons'
-
+import { useCookies } from "react-cookie";
 
 
 export function Reproductor() {
+  const [cancion,setCancion]=useState({})
+  const [load,setLoad]=useState(false)
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState([false,0]);
-  
+  const [token, setToken, removeToken] = useCookies(['token']);
+ console.log(cancion)
+  if(!load){
+  fetch(`http://localhost:3000/api/cancion/14`,{
+   method: 'GET',
+   headers: {
+       'auth-token': `${token.token}`
+   }}) 
+ .then(response => response.json())
+ .then((cancion) => {
+
+   // Aquí puedes trabajar con la respuesta en formato JSON
+   setCancion(cancion[0])
+   setLoad(true)  
+   
+ })
+ .catch(error => {
+   console.error('Error al obtener canciones:', error);
+ });
+}
     // Código para cambiar el volumen
     const handleVolumeChange = (event) => {
       const audio = document.getElementById("audio-element");
@@ -27,8 +48,7 @@ export function Reproductor() {
    
   }
 
-  let { idCancion } = useParams()
-  console.log(idCancion)
+  
   const handlePlayPauseClick = () => {
     const audio = document.getElementById("audio-element");
     if (isPlaying) {
@@ -52,20 +72,20 @@ export function Reproductor() {
   const handleSkipForward = () => {
     // Código para saltar hacia adelante
   };
-
+if(load)
   return (
     <>
       <div className="music-player">
         <div className="album-info">
-          <img className="album-cover" src={cancion.imagen} alt="Album cover" />
+          <img className="album-cover" src={cancion.image.S} alt="Album cover" />
           <div className="song-info">
-            <h3 className="song-title">{cancion.nombreCancion}</h3>
-            <p className="artist-name">{cancion.artista}</p>
+            <h3 className="song-title">{cancion.title.S}</h3>
+            <p className="artist-name">{cancion.artist.S}</p>
           </div>
         </div>
         <audio
           id="audio-element"
-          src={cancion.rutaCancion}
+          src={cancion.rutaFile.S}
           onTimeUpdate={handleTimeUpdate}
         />
         <div className="controls">

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import './css/Session.css'
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
+import { useCookies } from 'react-cookie';
 export function Login({ setLoged }) {
     const [email, setEmail] = useState('');
+    const [token, setToken, removeToken] = useCookies(['token']);
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
@@ -35,13 +36,14 @@ export function Login({ setLoged }) {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
+                        
                     },
                     body: JSON.stringify(values)
                 })
                     .then(response => response.json())
                     .then(async (data) => {
                         if (data.ok) {
-                            Cookies.set('token', data.data.token, { expires: 2 });
+                            setToken('token', data.data.token);
                             navigate('/')
                         } else {
                             setErrors({ email: data.err.message, email: data.err.message })

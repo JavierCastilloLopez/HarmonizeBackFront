@@ -1,6 +1,6 @@
 
 
-import {login,register} from "./importLogical.js"
+import {login,register,getExplorer} from "./importLogical.js"
 
 
 
@@ -26,6 +26,11 @@ app.post('/register',(req,res)=>{
 
   register(req,res)
 
+
+})
+app.get('/explorer',(req,res)=>{
+
+  getExplorer(req,res)
 
 })
 

@@ -6,6 +6,7 @@ import YupPassword from 'yup-password';
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 YupPassword(Yup);
 const { object, string, number, boolean } = Yup
 
@@ -160,4 +161,54 @@ export async function getUserData(req, res) {
     res.json(await getUserByEmail(jwt.decode(req.header('auth-token')).usuario.Email.S))
 
 
+}
+
+export async function getCancion(req, res) {
+    const Songs = await getItem('Cancion', req.params.id, 'IdCancion')
+
+    res.json(Songs)
+}
+export async function getExplorer(req, res) {
+    let json = await getTable('Cancion')
+    let response = {}
+
+    json.map(cancion => {
+        console.log(cancion)
+        if (response[cancion.genre.S])
+            response[cancion.genre.S].push(cancion)
+        else
+            response[cancion.genre.S] = [cancion]
+    })
+
+
+    res.json(response)
+
+}
+
+export async function getPlaylistFollowed(req, res) {
+    //id de las playlist del usuario actual
+
+    const Playlist = async (object) => {
+        let prueba = []
+        for (const playlist of object) {
+            
+            let item = await getItem('Playlist', playlist.S, 'IdPlaylist')
+           
+          await  prueba.push(item[0])
+
+        }
+
+        return prueba
+    }
+    let object = await getUserByEmail(jwt.decode(req.header('auth-token')).usuario.Email.S)
+    object = object.playlistFollowed.L
+
+    //obtener todos los datos de estas
+
+    let prueba=await Playlist(object)
+
+    res.json(prueba)
+
+    
+    
 }

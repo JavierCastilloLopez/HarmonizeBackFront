@@ -4,16 +4,21 @@ import './css/playlist.css'
 import { Cancion } from './Cancion.jsx'
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { useCookies } from 'react-cookie';
 export function Playlist() {
   const [load,setLoad]=useState(false)
   const [canciones,setCanciones]=useState([])
-  const [rootDirectory,setDirectory]=useState(document.location.origin.split(":")[1])
+  
+  const [token, setToken, removeToken] = useCookies(['token']);
   
   const {idPlaylist}=useParams()
   
   if(!load)
-   fetch(`http://${rootDirectory}:3000/api/bd/playlist/${idPlaylist}`)
+   fetch(`http://localhost:3000/api/playlist/${idPlaylist}`,{
+    method: 'GET',
+    headers: {
+        'auth-token': `${token.token}`
+    }})
    
   .then(response => response.json())
   .then((canciones) => {
