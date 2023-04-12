@@ -1,5 +1,5 @@
 
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMusic, faList, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
@@ -26,9 +26,9 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
   if (!load) {
     fetch(`http://localhost:3000/api/navbarPlaylist`, {
       method: 'GET',
-      headers:{
+      headers: {
         'auth-token': `${token.token}`
-    }
+      }
     })
       .then(response => response.json())
       .then((list) => {
@@ -54,7 +54,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
     }
   }
 
-  
+
   let profilePicture = 'https://fastly.picsum.photos/id/1009/200/200.jpg?hmac=2D10SFaYliFjzL4jp_ZjLmZ1_2jaJw89CntiJGjdlGE'
   return (
     <>
@@ -76,7 +76,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
               <span>Canciones</span>
             </NavLink>
           </li>
-          <li>
+          {/*   <li>
             <NavLink to="/albumes" activeClassName="active">
               <FontAwesomeIcon icon={faList} />
               <span>Álbumes</span>
@@ -87,7 +87,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
               <FontAwesomeIcon icon={faUser} />
               <span>Artistas</span>
             </NavLink>
-          </li>
+  </li>*/}
         </ul>
         {(
           <div className={`playlist-container ${animated && 'animated'}`}>
@@ -96,11 +96,13 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
             </h4>
 
             <ul>
-              {playlists.map((playlist) => (
-                <li className="playlist-item" key={playlist.id}>
-                  <Link to={`/playlist/${playlist.id}`} className='playlist-item-a'>
+              {playlists.map((playlist) =>
+
+              (
+                <li className="playlist-item" key={playlist.IdPlaylist.S}>
+                  <Link to={`/playlist/${playlist.IdPlaylist.S}`} className='playlist-item-a'>
                     <FontAwesomeIcon icon={faList} />
-                    <span className="playlist-name">{playlist.name}</span>
+                    <span className="playlist-name">{playlist.name.S}</span>
                   </Link>
                 </li>
               ))}
@@ -124,7 +126,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
 }
 
 function NoLogedNavbar({ showNavbar, setShowNavbar }) {
-
+  const navegador = useNavigate()
 
   const [animated, setAnimated] = useState(false)
   const animar = () => {
@@ -152,8 +154,8 @@ function NoLogedNavbar({ showNavbar, setShowNavbar }) {
 
         <div className={` ${animated && 'animated'}`}>
           <div className="login">
-            <button className="btn-login"> Login</button>
-            <button className="btn-register"> Register</button>
+            <button className="btn-login" onClick={() => navegador("/login")}> Login</button>
+            <button className="btn-register" onClick={() => navegador("/register")}> Register</button>
           </div>
 
         </div>
@@ -165,18 +167,24 @@ function NoLogedNavbar({ showNavbar, setShowNavbar }) {
               <span>Canciones</span>
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/albumes" activeClassName="active">
-              <FontAwesomeIcon icon={faList} />
-              <span>Álbumes</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/artistas" activeClassName="active">
-              <FontAwesomeIcon icon={faUser} />
-              <span>Artistas</span>
-            </NavLink>
-          </li>
+          {
+            /* 
+            <li>
+              <NavLink to="/albumes" activeClassName="active">
+                <FontAwesomeIcon icon={faList} />
+                <span>Álbumes</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/artistas" activeClassName="active">
+                <FontAwesomeIcon icon={faUser} />
+                <span>Artistas</span>
+              </NavLink>
+            
+            </li>
+            
+            */
+          }
         </ul>
 
       </nav>

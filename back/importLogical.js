@@ -1,4 +1,4 @@
-import { addItem, deleteItem, getTable, getItem, getUserByEmail } from "./conexinBD.js"
+import { addItem, deleteItem, getTable, getItem, getUserByEmail, getSongByName } from "./conexinBD.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as Yup from "yup"
@@ -12,7 +12,7 @@ const { object, string, number, boolean } = Yup
 
 export async function getPlaylist(req, res) {
     const Songs = await getItem('Playlist', req.params.id, 'IdPlaylist')
-    let JsonSongs
+
 
     const getData = async (data) => {
         let DataA = []
@@ -20,22 +20,16 @@ export async function getPlaylist(req, res) {
         let indice = 0
         for (const IdCancion of data) {
             result = await getItem('Cancion', IdCancion, 'IdCancion')
-            DataA[indice] = {
-                "id": parseInt(result[0].IdCancion.S),
-                "nombre": result[0].title.S,
-                "artista": result[0].artist.S,
-                "imagen": result[0].image.S,
-                "time": result[0].time.S
-            }
+            DataA[indice] = result[0]
             indice++
         }
         DataA.sort((a, b) => { return a.id - b.id })
         return DataA
     }
     console.log(Songs)
-    JsonSongs = await getData(Songs[0].Canciones.SS)
+    Songs[0].Canciones.SS = await getData(Songs[0].Canciones.SS)
 
-    res.send(JsonSongs)
+    res.send(Songs[0])
 
 }
 
@@ -171,7 +165,7 @@ export async function getCancion(req, res) {
 export async function getExplorer(req, res) {
     let json = await getTable('Cancion')
     let response = {}
-
+    console.log(json)
     json.map(cancion => {
         console.log(cancion)
         if (response[cancion.genre.S])
@@ -191,10 +185,10 @@ export async function getPlaylistFollowed(req, res) {
     const Playlist = async (object) => {
         let prueba = []
         for (const playlist of object) {
-            
+
             let item = await getItem('Playlist', playlist.S, 'IdPlaylist')
-           
-          await  prueba.push(item[0])
+
+            await prueba.push(item[0])
 
         }
 
@@ -205,10 +199,21 @@ export async function getPlaylistFollowed(req, res) {
 
     //obtener todos los datos de estas
 
-    let prueba=await Playlist(object)
+    let prueba = await Playlist(object)
 
     res.json(prueba)
 
-    
-    
+
+
 }
+
+export async function filterByName(req, res) {
+
+    const Songs = await getSongByName(req.params.name)
+
+    res.json(Songs)
+}
+
+
+
+

@@ -1,7 +1,7 @@
 import express from "express";
 
 
-  import { getUserData,getPlaylist,getCancion,getPlaylistFollowed } from "./importLogical.js";
+  import { getUserData,getPlaylist,getCancion,getPlaylistFollowed,filterByName} from "./importLogical.js";
  const route = express.Router()
 
  route.get('/user', (req, res,next) => {
@@ -20,6 +20,10 @@ route.get('/cancion/:id', (req, res,next) => {
 
 route.get('/navbarPlaylist', (req, res,next) => {
   getPlaylistFollowed(req,res)
+
+})
+route.get('/filtername/:name', (req, res,next) => {
+  filterByName(req,res)
 
 })
 

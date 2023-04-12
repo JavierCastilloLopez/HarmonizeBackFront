@@ -34,19 +34,14 @@ export function Explorer() {
             </div>
         );
     }
-    return (
-        <div>
-            hola
-        </div>
-    )
+    
 }
 
 
 
 function SongCard({ song }) {
     const [cola, setCookie, deleteCookie] = useCookies(['colaSongs'])
-    
-    console.log(cola.colaSongs)
+  
     const pushNext = () => {
         console.log(cola.colaSongs)
         if (cola.colaSongs) {
