@@ -42,8 +42,10 @@ export function Login({ setLoged }) {
                 })
                     .then(response => response.json())
                     .then(async (data) => {
+                        console.log(data)
                         if (data.ok) {
                             setToken('token', data.data.token);
+                            setToken('user', data.data.user);
                             navigate('/')
                         } else {
                             setErrors({ email: data.err.message, email: data.err.message })

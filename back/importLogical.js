@@ -1,4 +1,5 @@
-import { addItem, deleteItem, getTable, getItem, getUserByEmail, getSongByName } from "./conexinBD.js"
+import { addItem, deleteItem, getTable, getItem, getUserByEmail, getSongByName,addtoPlaylist } from "./conexinBD.js"
+import {subirArchivoAS3} from "./conexionS3.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as Yup from "yup"
@@ -37,7 +38,7 @@ export async function login(req, res) {
     let data = req.body
     console.log(data)
     const userBD = await getUserByEmail(data.email)
-    console.log(userBD.password)
+    console.log(userBD)
     if (!userBD) {
         return res.json({
             ok: false,
@@ -75,7 +76,10 @@ export async function login(req, res) {
     res.header('auth-token', token).json({
         ok: true,
         err: null,
-        data: { token }
+        data: { token,
+                user:{
+                    name:userBD.name.S
+                } }
     })
 
 
@@ -214,6 +218,29 @@ export async function filterByName(req, res) {
     res.json(Songs)
 }
 
+export async function addSongToPlaylist(req, res) {
+    console.log(req.body.S)
+    const resp=await addtoPlaylist(req.params.id,req.body.S)
+    console.log("aaa"+resp+'aaa')
+    res.json(resp)
+}
 
+export async function LogicSubida(req,res){
+    const artista = req.body.artista;
+    const genero = req.body.genero;
+    const cancion = req.file.buffer;
+    const name=uuidv4()+".mp3"
+   
+    try {
+      const result = await subirArchivoAS3(cancion, 'harmonize1', name, 'public-read', 'audio/mpeg');
+      console.log(result);
+      res.send('Archivo subido con éxito a S3'+name);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error al subir archivo a S3');
+    }
+
+
+}
 
 

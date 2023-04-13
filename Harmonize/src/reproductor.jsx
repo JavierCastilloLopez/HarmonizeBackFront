@@ -27,6 +27,7 @@ export function Reproductor() {
       setCancion(copy.shift())
       setLoad(true)
       setCola("colaSongs", copy)
+      
     }
   }
 
@@ -61,6 +62,9 @@ export function Reproductor() {
     const currentTime = audio.currentTime;
     const duration = audio.duration;
     setProgress(currentTime / duration * 100);
+    if(currentTime==audio.duration){
+      setLoad(false)
+    }
   };
   const handleSkipBackward = () => {
     // Código para saltar hacia atrás
@@ -69,8 +73,9 @@ export function Reproductor() {
   };
 
   const handleSkipForward = () => {
+    
     setLoad(false)
-
+    
   };
   console.log(load)
   if (load)
@@ -88,6 +93,7 @@ export function Reproductor() {
             id="audio-element"
             src={cancion.rutaFile.S}
             onTimeUpdate={handleTimeUpdate}
+          
           />
           <div className="controls">
             <div>
@@ -123,7 +129,7 @@ export function Reproductor() {
               </button>
               <div className="volume-slider">
                 <input type="range" id="volume" name="volume"
-                  min="0" max="11" onChange={handleVolumeChange} />
+                  min="0" max="11" onChange={handleVolumeChange}  />
 
               </div>
             </div>

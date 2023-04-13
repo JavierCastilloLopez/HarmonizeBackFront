@@ -1,13 +1,13 @@
 // Load the AWS SDK for Node.js
-import { DynamoDBClient, ListTablesCommand, ScanCommand, PutItemCommand, DeleteItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
-import { v4 as uuidv4 } from 'uuid';
+import { DynamoDBClient, ListTablesCommand, ScanCommand, PutItemCommand, DeleteItemCommand, QueryCommand,UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+
 
 const client = new DynamoDBClient({
   region: "us-east-1",
   credentials: {
-    accessKeyId: "ASIATQ5KEFU7MQFENOFJ",
-    secretAccessKey: "y3c+UWZPn77CRJq5phm403IqE+x37df0sJE10oZI",
-    sessionToken: "FwoGZXIvYXdzEOL//////////wEaDEpHbFLcnEfbVyOcZyK+ATSnc22Gd9cVmNnvpxCFEF8Acnp7WmdzR0HGHS46JV+bysSN8HZw8O+6ibmyKYL62yJ7vg8KCznmFvOz5VK2Cng0JrVzL3O5Lx05INELvn3cDwE1i1RfxNGJS0CDM96K59M/kqmEgAMes8q4vQPXAwmIZArW03n0aPqcprJgqs5IT120OfpWbqovRAvjxkDSf9XXTiEzDHemQJoP+L8nBuCvycCvaI5vgjqngTl864B/Vo2j6EHQyHgqt+4MGcYozeXZoQYyLQYujyluYdF2hyCXujFcGCPI1hL37fXiOaADj1hNh+SzQA9kqUHGxSAu9jiZWw=="
+    accessKeyId: "ASIATQ5KEFU7ARMDKC7R",
+    secretAccessKey: "rgLgFEdqXD5//sAL1A6T01rJbADQeo1zTCQXtTlM",
+    sessionToken: "FwoGZXIvYXdzEPj//////////wEaDKojbARPDay4rM591iK+AQZ2uH5G67QN09vbxPBLocZjVlZri0MIbd3VW/CApqDOopy4xND5YXDaqxYyV0S8yHXPeEecTY5UoNPK6ZR2S5x8adVZDLNqHIB7clvTPxtDJTszLDCybUoAv1wMTi2IRXD4cBK+rPNW5/B2cbeFbTSKhIx7LWdUhF8PSV5NG1STfdbkEYi7q7lNNav87n1zRknO/agi1YnnsVeqZtriUMsiqCWPZJPsDsu1N8974aevZZIlV3a0Y4k3nHotSfQoq8feoQYyLTR87K0/AjEqZzTrPgg44lcpCca5bmKDR2b/wDGu5AOwjJqDgpX7Typ+O94K3w=="
   }
 });
 
@@ -166,3 +166,26 @@ export async function getSongByName(name) {
 
 }
 
+export async function addtoPlaylist(playlist,item){
+  const params = {
+    TableName: "Playlist",
+    Key: {
+      "IdPlaylist": { S: playlist }
+    },
+    UpdateExpression: "add Canciones :nuevaCancion",
+    ExpressionAttributeValues: {
+      ":nuevaCancion": {SS:[item]}
+    }
+  };
+  const command = new UpdateItemCommand(params);
+
+client.send(command)
+  .then((data) => {
+    return data;
+  })
+  .catch((error) => {
+    return error;
+  });
+
+
+}

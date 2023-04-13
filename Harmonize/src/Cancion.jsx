@@ -34,7 +34,7 @@ export function Cancion({ cancion }) {
 	}
 	const changeMenu = () => {
 		setMenu(!menu)
-
+		
 	}
 	
 	return (
@@ -49,29 +49,14 @@ export function Cancion({ cancion }) {
 						<FontAwesomeIcon icon={faPlay}></FontAwesomeIcon>
 					</button>
 				</div>
-				<div className="song-photo" onClick={pushNext}><img src={`../${cancion.image.S}`} alt="Song photo" /></div>
+				<div className="song-photo" onClick={pushNext}><img src={`../${cancion.image.S}`} /></div>
 				<div className='info'>
 					<div><h1>{cancion.title.S}</h1></div>
 					<div><h2>{cancion.artist.S}</h2></div>
 					<div> <p>{cancion.time.S}</p></div>
 				</div>
-				<div className="song-like" onClick={chageLike}>
-					<button className={song ? 'like-button liked' : 'like-button'} >
-						<FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-					</button>
-				</div>
-				<div className='action-menu' onClick={changeMenu}>
-					<FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
-				</div>
-				<div className={menu ? 'menu-popover' : 'menu-popover no-visible'}>
-					<button className={song ? 'like-button liked' : 'like-button'} onClick={chageLike}>
-						<FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-					</button>
-					<button className='playlist-button' >
-						<FontAwesomeIcon icon={faList}></FontAwesomeIcon>
-					</button>
-
-				</div>
+				
+				
 			</div>
 			{/*
 					<div className='song-container menu'>

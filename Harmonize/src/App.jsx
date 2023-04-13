@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Navbar } from './Navbar.jsx';
 import {getUserData} from './fetch.js'
+import {UploadSong} from './UploadSong.jsx'
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
   const [user,setUser]=useState({})
@@ -33,7 +34,7 @@ function App() {
         <Route path="/register" element={<Register/>}>
         
         </Route>
-        
+        <Route path="/newSong" element={<UploadSong />}></Route>
         
         <Route path="/" element={<Explorer />}>
         

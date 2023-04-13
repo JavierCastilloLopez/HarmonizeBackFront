@@ -1,5 +1,5 @@
 
-import { faHeart, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faAdd, faPlay, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -34,14 +34,30 @@ export function Explorer() {
             </div>
         );
     }
-    
+
 }
 
 
 
 function SongCard({ song }) {
-    const [cola, setCookie, deleteCookie] = useCookies(['colaSongs'])
+    const [cola, setCookie, deleteCookie] = useCookies(['colaSongs','playlist'])
+ 
+    const [menu, setMenu] = useState(false)
+    const changeMenu = () => {
+        setMenu(!menu)
   
+    }
+    const addTolist=(playlist)=>{
+        fetch(`http://localhost:3000/api/playlistAdd/${playlist.IdPlaylist.S}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': `${cola.token}`
+            },
+            body: JSON.stringify(song.IdCancion)
+        })
+
+    }
     const pushNext = () => {
         console.log(cola.colaSongs)
         if (cola.colaSongs) {
@@ -91,7 +107,23 @@ function SongCard({ song }) {
                         <FontAwesomeIcon className="badge-icon" icon={faPlay} onClick={pushNext}></FontAwesomeIcon>
                         <div className="description">
                             <div className="title">
-                                <FontAwesomeIcon className='action' icon={faHeart}></FontAwesomeIcon>
+                                <div onClick={changeMenu} className='actionmenu'>
+                                    <FontAwesomeIcon icon={faList}></FontAwesomeIcon>
+                                </div>
+                                <div className={menu ? 'menu-popover' : 'menu-popover no-visible'}>
+
+
+                                    {cola.playlist.map((playlist) =>
+
+                                    (
+                                        <li className="playlist-item" key={playlist.IdPlaylist.S} onClick={()=>addTolist(playlist)}>
+                                            
+                                                <FontAwesomeIcon icon={faAdd} />
+                                                <span className="playlist-name">{playlist.name.S}</span>
+                                            
+                                        </li>
+                                    ))}
+                                </div>
                                 <div className="artist-name">
                                     <strong>{song.artist.S}</strong>
 

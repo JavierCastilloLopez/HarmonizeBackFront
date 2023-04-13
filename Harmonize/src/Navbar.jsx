@@ -1,7 +1,7 @@
 
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic, faList, faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMusic, faList, faUser, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { useCookies } from 'react-cookie'
 import './css/Navbar.css'
@@ -22,7 +22,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
   const [animated, setAnimated] = useState(false)
   const [playlists, setdata] = useState([])
   const [load, setLoad] = useState(false)
-  const [token, setToken, removeToken] = useCookies(['token']);
+  const [token, setToken, removeToken] = useCookies(['playlist']);
   if (!load) {
     fetch(`http://localhost:3000/api/navbarPlaylist`, {
       method: 'GET',
@@ -36,6 +36,8 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
         // Aquí puedes trabajar con la respuesta en formato JSON
         setdata(list)
         setLoad(true)
+        setToken('playlist',list)
+        console.log(token)
 
       }).catch((err) => console.log(err))
 
@@ -65,8 +67,8 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
         <div className="user-profile">
 
           <div className={`profile-info ${animated && 'animated'}`}>
-            <h3 className="name">Nombre de Usuario</h3>
-            <p className="premium">Premium</p>
+            <h3 className="name">{token.user.name[0].toUpperCase()+token.user.name.substring(1).toLowerCase()}</h3>
+            <p className="premium">Salir</p>
           </div>
         </div>
         <ul className={` ${animated && 'animated'} `}>
@@ -74,6 +76,10 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
             <NavLink to="/" activeClassName="active">
               <FontAwesomeIcon icon={faMusic} />
               <span>Canciones</span>
+            </NavLink>
+            <NavLink to="/newSong" activeClassName="active">
+              <FontAwesomeIcon icon={faUpload} />
+              <span>Subir tu musica</span>
             </NavLink>
           </li>
           {/*   <li>
