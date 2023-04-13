@@ -68,7 +68,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
 
           <div className={`profile-info ${animated && 'animated'}`}>
             <h3 className="name">{token.user.name[0].toUpperCase()+token.user.name.substring(1).toLowerCase()}</h3>
-            <p className="premium">Salir</p>
+            <p className="premium" onClick={()=>removeToken("token")}>Salir</p>
           </div>
         </div>
         <ul className={` ${animated && 'animated'} `}>
