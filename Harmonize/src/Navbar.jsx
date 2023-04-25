@@ -1,7 +1,7 @@
 
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic, faList, faUser, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faMusic, faList, faCheck, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { useCookies } from 'react-cookie'
 import './css/Navbar.css'
@@ -36,7 +36,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
         // Aquí puedes trabajar con la respuesta en formato JSON
         setdata(list)
         setLoad(true)
-        setToken('playlist',list)
+        setToken('playlist', list)
         console.log(token)
 
       }).catch((err) => console.log(err))
@@ -67,8 +67,8 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
         <div className="user-profile">
 
           <div className={`profile-info ${animated && 'animated'}`}>
-            <h3 className="name">{token.user.name[0].toUpperCase()+token.user.name.substring(1).toLowerCase()}</h3>
-            <p className="premium" onClick={()=>removeToken("token")}>Salir</p>
+            <h3 className="name">{token.user.name[0].toUpperCase() + token.user.name.substring(1).toLowerCase()}</h3>
+            <p className="premium" onClick={() => removeToken("token")}>Salir</p>
           </div>
         </div>
         <ul className={` ${animated && 'animated'} `}>
@@ -102,7 +102,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
             </h4>
 
             <ul>
-              {playlists.map((playlist) =>
+              {token.playlist.playlistFollowed.map((playlist) =>
 
               (
                 <li className="playlist-item" key={playlist.IdPlaylist.S}>
@@ -113,10 +113,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
                 </li>
               ))}
               <li className="playlist-item" >
-                <Link className='playlist-item-a'>
-                  <FontAwesomeIcon icon={faPlus} />
-                  <span className="playlist-name">Nueva playlist</span>
-                </Link>
+                <AddPlaylist token={token} setLoad={setLoad} />
               </li>
             </ul>
           </div>
@@ -131,6 +128,62 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
 
 }
 
+function AddPlaylist({ token, setLoad }) {
+  const [activeForm, setActive] = useState(false)
+  const [editableContent, setEditableContent] = useState("");
+
+  const handleEditableContentChange = (event) => {
+    const newContent = event.target.innerText;
+    setEditableContent(newContent);
+    console.log(editableContent)
+  };
+  const handleForm = () => {
+    setActive(!activeForm)
+
+
+  }
+
+  const sendPlaylist = () => {
+    let body=`{"name":"${editableContent}"}`
+    console.log(body)
+    handleForm()
+    fetch("http://localhost:3000/api/playlist", {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': `${token.token}`
+        
+      },
+      body: body
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response)
+        setLoad(false)
+      })
+      .catch(err => console.error(err))
+  }
+
+  if (!activeForm) {
+    return (
+      <Link className='playlist-item-a' onClick={handleForm}>
+        <FontAwesomeIcon icon={faPlus} />
+        <span className="playlist-name">Nueva playlist</span>
+      </Link>
+    )
+
+  }
+  else {
+    return (
+
+      <div className='playlist-item-a'>
+        <FontAwesomeIcon icon={faCheck} onClick={sendPlaylist} /> <span className="playlist-name" contenteditable="true" onInput={handleEditableContentChange}>Escribe el nombre</span>
+      </div>
+
+
+    )
+  }
+}
 function NoLogedNavbar({ showNavbar, setShowNavbar }) {
   const navegador = useNavigate()
 

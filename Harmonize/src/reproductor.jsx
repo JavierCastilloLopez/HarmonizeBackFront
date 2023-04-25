@@ -8,27 +8,37 @@ import { useCookies } from "react-cookie";
 
 
 export function Reproductor() {
-  const [cancion, setCancion] = useState({})
-  const [load, setLoad] = useState(false)
+  const [canciones,setCanciones]=useState([])
+  const [indice, setIndice] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState([false, 0]);
-  const [token, setToken, removeToken] = useCookies(['token']);
+  const [tipe, setTipe] = useState(1);
+  
   const [cookies, setCola, removeCola] = useCookies(['colaSongs']);
 
   useEffect(() => {
  }, [cookies])
+ 
 
- console.log(cookies.colaSongs)
+ if(cookies.colaSongs && canciones[0]==undefined){
+  console.log(cookies.colaSongs)
+  setCanciones(cookies.colaSongs)
 
- if (!load) {
-    if (cookies.colaSongs && cookies.colaSongs.length > 0) {
-      let copy = [...cookies.colaSongs]
-      setCancion(copy.shift())
-      setLoad(true)
-      setCola("colaSongs", copy)
-      
+ }
+  const nextSong=()=>{
+    if(tipe>0){
+      if(indice<canciones.length){
+        setIndice(indice+1)
+        console.log(canciones.length)
+      }else{
+        setIndice(0)
+      }
+    }else{
+      setIndice(parseInt(Math.random()*canciones.length))
     }
+
+
   }
 
   // Código para cambiar el volumen
@@ -62,9 +72,10 @@ export function Reproductor() {
     const currentTime = audio.currentTime;
     const duration = audio.duration;
     setProgress(currentTime / duration * 100);
-    if(currentTime==audio.duration){
-      setLoad(false)
+    if(currentTime==duration){
+      nextSong()
     }
+   
   };
   const handleSkipBackward = () => {
     // Código para saltar hacia atrás
@@ -73,25 +84,25 @@ export function Reproductor() {
   };
 
   const handleSkipForward = () => {
+    nextSong()
     
-    setLoad(false)
     
   };
-  console.log(load)
-  if (load)
+  
+  if (canciones[indice])
     return (
       <>
         <div className="music-player">
           <div className="album-info">
-            <img className="album-cover" src={cancion.image.S} alt="Album cover" />
+            <img className="album-cover" src={canciones[indice].image.S} alt="Album cover" />
             <div className="song-info">
-              <h3 className="song-title">{cancion.title.S}</h3>
-              <p className="artist-name">{cancion.artist.S}</p>
+              <h3 className="song-title">{canciones[indice].title.S}</h3>
+              <p className="artist-name">{canciones[indice].artist.S}</p>
             </div>
           </div>
           <audio
             id="audio-element"
-            src={cancion.rutaFile.S}
+            src={canciones[indice].rutaFile.S}
             onTimeUpdate={handleTimeUpdate}
           
           />

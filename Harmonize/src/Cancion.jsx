@@ -49,7 +49,7 @@ export function Cancion({ cancion }) {
 						<FontAwesomeIcon icon={faPlay}></FontAwesomeIcon>
 					</button>
 				</div>
-				<div className="song-photo" onClick={pushNext}><img src={`../${cancion.image.S}`} /></div>
+				<div className="song-photo" onClick={pushNext}><img src={cancion.image.S} /></div>
 				<div className='info'>
 					<div><h1>{cancion.title.S}</h1></div>
 					<div><h2>{cancion.artist.S}</h2></div>

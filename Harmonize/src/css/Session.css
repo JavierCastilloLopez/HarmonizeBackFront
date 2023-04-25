@@ -48,7 +48,10 @@
   
   /*checkbox to switch from sign up to login*/
 
+  input, select {
+  box-sizing: border-box;
   
+}
   /*Login*/
   .loginForm {
     position: relative;
@@ -62,7 +65,7 @@
   }
   
   label {
-    color: #573b8a;
+    color: #1da1f2;
     font-size: 2rem;
     justify-content: center;
     display: flex;
@@ -92,7 +95,7 @@
   }
   
   .register label {
-    color: #573b8a;
+    color: #1da1f2;
     margin: auto;
     margin-top: 20px;
   }
@@ -104,7 +107,7 @@
     height: 40px;
     margin: 12px auto 10%;
     color: #fff;
-    background: #573b8a;
+    background: #1da1f2;
     font-size: 1rem;
     font-weight: bold;
     border: none;
@@ -114,5 +117,5 @@
   }
   
   .form button:hover {
-    background-color: #6d44b8;
+    background-color: #1673ad;
   }

@@ -1,0 +1,42 @@
+
+  .file-upload {
+    margin: auto;
+    text-align: center;
+    background-color:#7fc8f5;
+    color: white;
+    width: 85%;
+    padding-top: 20px;
+  }
+  
+  .file-upload h2 {
+    text-align: center;
+    margin: auto;
+    height: auto;
+    width: auto;
+  }
+  .file-upload input {
+    display: block;
+    opacity: 0;
+    
+   }
+
+   .file-selected {
+    margin: auto;
+    text-align: center;
+    background-color: #1da1f2;
+    color: white;
+    width: 85%;
+    padding-top: 20px;
+  }
+  
+  .file-selected h2 {
+    text-align: center;
+    margin: auto;
+    height: auto;
+    width: auto;
+  }
+  .file-selected input {
+    display: block;
+    opacity: 0;
+    
+   }

@@ -1,7 +1,8 @@
 import express from "express";
 import multer from "multer";
 
-  import { getUserData,getPlaylist,getCancion,getPlaylistFollowed,filterByName, addSongToPlaylist,LogicSubida} from "./importLogical.js";
+  import { getUserData,getPlaylist,getCancion,getPlaylistFollowed,filterByName, addSongToPlaylist,LogicSubida,addPlaylist} from "./importLogical.js";
+import { addtoPlaylist } from "./conexinBD.js";
  const route = express.Router()
  const upload=multer()
  route.get('/user', (req, res,next) => {
@@ -32,7 +33,18 @@ route.post('/playlistAdd/:id', (req, res,next) => {
   addSongToPlaylist(req,res)
 
 })
-route.post('/upload',upload.single("cancion"), (req, res,next) => {
+route.post('/playlist', (req, res,next) => {
+  addPlaylist(req,res)
+
+})
+route.post('/upload',upload.fields([
+  { name: "titulo", maxCount: 1 },
+  { name: "artista", maxCount: 1 },
+  { name: "genero", maxCount: 1 },
+  { name: "imagenCancion", maxCount: 1 },
+  { name: "cancion", maxCount: 1 },
+  
+]), (req, res,next) => {
   LogicSubida(req ,res)
   
 })

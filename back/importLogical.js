@@ -1,5 +1,5 @@
-import { addItem, deleteItem, getTable, getItem, getUserByEmail, getSongByName,addtoPlaylist } from "./conexinBD.js"
-import {subirArchivoAS3} from "./conexionS3.js"
+import { addItem, deleteItem, getTable, getItem, getUserByEmail, getSongByName, addtoPlaylist, playlistFollowed, playlistCreate } from "./conexinBD.js"
+import { subirArchivoAS3 } from "./conexionS3.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import * as Yup from "yup"
@@ -28,10 +28,13 @@ export async function getPlaylist(req, res) {
         return DataA
     }
     console.log(Songs)
-    Songs[0].Canciones.SS = await getData(Songs[0].Canciones.SS)
+    if (Songs[0].Canciones) {
+        Songs[0].Canciones.SS = await getData(Songs[0].Canciones.SS)
 
-    res.send(Songs[0])
-
+        res.send(Songs[0])
+    } else {
+        res.status(500).send('not Songs in playlist')
+    }
 }
 
 export async function login(req, res) {
@@ -76,10 +79,12 @@ export async function login(req, res) {
     res.header('auth-token', token).json({
         ok: true,
         err: null,
-        data: { token,
-                user:{
-                    name:userBD.name.S
-                } }
+        data: {
+            token,
+            user: {
+                name: userBD.name.S
+            }
+        }
     })
 
 
@@ -190,7 +195,7 @@ export async function getPlaylistFollowed(req, res) {
         let prueba = []
         for (const playlist of object) {
 
-            let item = await getItem('Playlist', playlist.S, 'IdPlaylist')
+            let item = await getItem('Playlist', playlist, 'IdPlaylist')
 
             await prueba.push(item[0])
 
@@ -199,13 +204,28 @@ export async function getPlaylistFollowed(req, res) {
         return prueba
     }
     let object = await getUserByEmail(jwt.decode(req.header('auth-token')).usuario.Email.S)
-    object = object.playlistFollowed.L
+    let resp
+    let follow
+    let create
+    if (object.playlistFollowed.SS) {
+        follow = object.playlistFollowed.SS
 
+    } else {
+        follow = []
+    }
+    if (object.playlistFollowed.SS) {
+        create = object.playlistCreate.SS
+    } else {
+        create = []
+    }
     //obtener todos los datos de estas
 
-    let prueba = await Playlist(object)
+    resp = await {
+        playlistFollowed: await Playlist(follow),
+        create: await Playlist(create)
+    }
 
-    res.json(prueba)
+    res.json(resp)
 
 
 
@@ -220,27 +240,114 @@ export async function filterByName(req, res) {
 
 export async function addSongToPlaylist(req, res) {
     console.log(req.body.S)
-    const resp=await addtoPlaylist(req.params.id,req.body.S)
-    console.log("aaa"+resp+'aaa')
+    const resp = await addtoPlaylist(req.params.id, req.body.S)
+    console.log("aaa" + resp + 'aaa')
     res.json(resp)
 }
 
-export async function LogicSubida(req,res){
+export async function LogicSubida(req, res) {
+    const name = (file, path) => {
+        const nombreArchivo = file.originalname;
+        const partes = nombreArchivo.split(".");
+        const extension = partes[partes.length - 1];
+
+        const name = path + uuidv4() + "." + extension
+        return name
+    }
     const artista = req.body.artista;
     const genero = req.body.genero;
-    const cancion = req.file.buffer;
-    const name=uuidv4()+".mp3"
-   
+    const title = req.body.titulo;
+    const cancion = req.files["cancion"][0];
+    const duration = req.body.duration.split(".")[0]
+    const cancb = cancion.buffer
+    const image = req.files["imagenCancion"][0];
+    const imageb = image.buffer
+    const nameSong = name(cancion, 'audio/')
+    const nameImage = name(image, 'image/')
+
+    const userCreate = req.user.usuario.IdUser.S
+
+    const Song = {
+
+        "rutaFile": {
+            "S": "https://harmonizecontainer.s3.amazonaws.com/" + nameSong
+        },
+        "image": {
+            "S": "https://harmonizecontainer.s3.amazonaws.com/" + nameImage
+        },
+        "genre": {
+            "S": genero
+        },
+        "artist": {
+            "S": artista
+        },
+        "IdCancion": {
+            "S": uuidv4()
+        },
+        "time": {
+            "S": duration
+        },
+        "UserCreate": {
+            "S": userCreate
+        },
+        "title": {
+            "S": title
+        }
+    }
+
     try {
-      const result = await subirArchivoAS3(cancion, 'harmonize1', name, 'public-read', 'audio/mpeg');
-      console.log(result);
-      res.send('Archivo subido con éxito a S3'+name);
+        let result = await subirArchivoAS3(cancb, 'harmonizecontainer', nameSong, 'public-read', 'audio/mpeg');
+        result += await subirArchivoAS3(imageb, 'harmonizecontainer', nameImage, 'public-read', 'image/*');
+        result += await addItem('Cancion', Song)
+        res.send({ message: 'Archivo subido con éxito a S3 ' });
     } catch (error) {
-      console.log(error);
-      res.status(500).send('Error al subir archivo a S3');
+        console.log(error);
+        res.status(500).send('Error al subir archivo a S3');
     }
 
 
 }
+
+export async function addPlaylist(req, res) {
+
+    const Playlist = {
+
+
+        "name": {
+            "S": req.body.name
+        },
+        "Followers": {
+            "N": "1"
+        },
+        "IdPlaylist": {
+            "S": uuidv4()
+        },
+
+    }
+    let response = await addItem('Playlist', Playlist)
+    if (response["$metadata"].httpStatusCode == 200) {
+        response = await playlistCreate(req.user.usuario.IdUser.S, Playlist.IdPlaylist.S)
+        console.log("aaaa")
+        if (response["$metadata"].httpStatusCode == 200) {
+            response = await playlistFollowed(req.user.usuario.IdUser.S, Playlist.IdPlaylist.S)
+            res.json(response)
+        }
+
+    }
+
+
+}
+export async function followPlaylist(req, res) {
+
+
+
+    let response = await playlistFollowed(req.user.usuario.IdUser.S, req.body.IdPlaylist)
+    res.json(response)
+
+
+
+
+}
+
 
 

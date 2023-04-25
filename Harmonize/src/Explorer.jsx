@@ -113,7 +113,7 @@ function SongCard({ song }) {
                                 <div className={menu ? 'menu-popover' : 'menu-popover no-visible'}>
 
 
-                                    {cola.playlist.map((playlist) =>
+                                    {cola.playlist && cola.playlist.create.map((playlist) =>
 
                                     (
                                         <li className="playlist-item" key={playlist.IdPlaylist.S} onClick={()=>addTolist(playlist)}>

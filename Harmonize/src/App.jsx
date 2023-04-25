@@ -6,13 +6,13 @@ import { Explorer } from './Explorer.jsx';
 import { Reproductor } from './reproductor.jsx';
 import {Login,Register} from './Session.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Cookies from 'js-cookie';
+
 import { Navbar } from './Navbar.jsx';
-import {getUserData} from './fetch.js'
+
 import {UploadSong} from './UploadSong.jsx'
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
-  const [user,setUser]=useState({})
+  
  
   return (
     <Router>
