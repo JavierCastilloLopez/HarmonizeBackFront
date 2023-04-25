@@ -102,7 +102,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
             </h4>
 
             <ul>
-              {token.playlist.playlistFollowed.map((playlist) =>
+              {token.playlist ? token.playlist.playlistFollowed.map((playlist) =>
 
               (
                 <li className="playlist-item" key={playlist.IdPlaylist.S}>
@@ -111,7 +111,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
                     <span className="playlist-name">{playlist.name.S}</span>
                   </Link>
                 </li>
-              ))}
+              )):''}
               <li className="playlist-item" >
                 <AddPlaylist token={token} setLoad={setLoad} />
               </li>
@@ -152,7 +152,7 @@ function AddPlaylist({ token, setLoad }) {
       headers: {
         'Content-Type': 'application/json',
         'auth-token': `${token.token}`
-        
+
       },
       body: body
     })
@@ -227,7 +227,7 @@ function NoLogedNavbar({ showNavbar, setShowNavbar }) {
             </NavLink>
           </li>
           {
-            /* 
+            /*
             <li>
               <NavLink to="/albumes" activeClassName="active">
                 <FontAwesomeIcon icon={faList} />
@@ -239,9 +239,9 @@ function NoLogedNavbar({ showNavbar, setShowNavbar }) {
                 <FontAwesomeIcon icon={faUser} />
                 <span>Artistas</span>
               </NavLink>
-            
+
             </li>
-            
+
             */
           }
         </ul>
