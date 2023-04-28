@@ -5,11 +5,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const s3 = new S3Client({
   region: "us-east-1",
-  credentials: {
-    accessKeyId: "ASIATQ5KEFU7MRSNWY3S",
-    secretAccessKey: "afKpcUbHaInGU/X0qjPKC+vIeBaiLWobGoYSRBpp",
-    sessionToken: "FwoGZXIvYXdzEDAaDO790rCSJ7kx5VQdhSK+AZkz49bC1mjzlt73QxJ4LUnTy2keS6mTE3HXIfOcJneN4w/mnyJQuqY/bLF3FU4oLF008VF11oEJ6K3LuLWIGS3wXcq3BfFTBX5hHQani0LxMs3Ic09SN0Vmb5RWB/3HCeceQorpq2ZLIdkwqVcUcb0SgykXYrtrBfKSDIJygLyms6hBlHGuq367ZuhjcCNiSsl+WiBnDX9gkGWeRQz/bjeQajhto02vq7HRDg5WWr+VYxfjcHqOQVqTiRbQv2kolIijogYyLf+f7uXZOyEuVrhBUCbnISuCA05Qhnhg6H3dTiaVYhc/tndkpl5tqyLR2PAUHQ=="
-  }
+ 
 });
 
 
