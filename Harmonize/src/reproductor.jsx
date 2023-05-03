@@ -7,7 +7,7 @@ import { faPause, faPlay, faBackward, faForward, faVolumeMute, faVolumeUp } from
 import { useCookies } from "react-cookie";
 
 
-export function Reproductor() {
+export function Reproductor({serverURL}) {
   const [canciones,setCanciones]=useState([])
   const [indice, setIndice] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false);

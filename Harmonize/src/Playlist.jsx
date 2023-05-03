@@ -5,7 +5,7 @@ import { Cancion } from './Cancion.jsx'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-export function Playlist() {
+export function Playlist({serverURL}) {
   const [load, setLoad] = useState(false)
   const [canciones, setCanciones] = useState({
     name:{
@@ -18,7 +18,7 @@ export function Playlist() {
     setLoad(false)
   }, [idPlaylist])
   if (!load)
-    fetch(`http://localhost:3000/api/playlist/${idPlaylist}`, {
+    fetch(`${serverURL}/api/playlist/${idPlaylist}`, {
       method: 'GET',
       headers: {
         'auth-token': `${token.token}`

@@ -1,30 +1,31 @@
 
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic, faList, faCheck, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faMusic,faUser, faList, faCheck, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import { useCookies } from 'react-cookie'
 import './css/Navbar.css'
 
-export function Navbar({ showNavbar, setShowNavbar }) {
+export function Navbar({ showNavbar, setShowNavbar,serverURL }) {
   const [token, setToken] = useCookies(['token']);
-
+  console.log(serverURL)
   console.log(token)
   if (token.token) {
-    return (<LogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />)
+    return (<LogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL}/>)
 
   }
-  return (<NoLogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} />)
+  return (<NoLogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL}/>)
 }
 
-function LogedNavbar({ showNavbar, setShowNavbar }) {
+function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
 
   const [animated, setAnimated] = useState(false)
   const [playlists, setdata] = useState([])
   const [load, setLoad] = useState(false)
   const [token, setToken, removeToken] = useCookies(['playlist']);
+  console.log(serverURL)
   if (!load) {
-    fetch(`http://localhost:3000/api/navbarPlaylist`, {
+    fetch(`${serverURL}/api/navbarPlaylist`, {
       method: 'GET',
       headers: {
         'auth-token': `${token.token}`
@@ -113,7 +114,7 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
                 </li>
               )):''}
               <li className="playlist-item" >
-                <AddPlaylist token={token} setLoad={setLoad} />
+                <AddPlaylist token={token}  setLoad={setLoad} serverURL={serverURL} />
               </li>
             </ul>
           </div>
@@ -128,10 +129,10 @@ function LogedNavbar({ showNavbar, setShowNavbar }) {
 
 }
 
-function AddPlaylist({ token, setLoad }) {
+function AddPlaylist({ token, setLoad,serverURL}) {
   const [activeForm, setActive] = useState(false)
   const [editableContent, setEditableContent] = useState("");
-
+  console.log(serverURL)
   const handleEditableContentChange = (event) => {
     const newContent = event.target.innerText;
     setEditableContent(newContent);
@@ -143,11 +144,11 @@ function AddPlaylist({ token, setLoad }) {
 
   }
 
-  const sendPlaylist = () => {
+  const sendPlaylist = (serverURL) => {
     let body=`{"name":"${editableContent}"}`
     console.log(body)
     handleForm()
-    fetch("http://localhost:3000/api/playlist", {
+    fetch(`${serverURL}/api/playlist`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -177,14 +178,14 @@ function AddPlaylist({ token, setLoad }) {
     return (
 
       <div className='playlist-item-a'>
-        <FontAwesomeIcon icon={faCheck} onClick={sendPlaylist} /> <span className="playlist-name" contenteditable="true" onInput={handleEditableContentChange}>Escribe el nombre</span>
+        <FontAwesomeIcon icon={faCheck} onClick={()=>sendPlaylist(serverURL)} /> <span className="playlist-name" contenteditable="true" onInput={handleEditableContentChange}>Escribe el nombre</span>
       </div>
 
 
     )
   }
 }
-function NoLogedNavbar({ showNavbar, setShowNavbar }) {
+function NoLogedNavbar({ showNavbar, setShowNavbar,serverURL}) {
   const navegador = useNavigate()
 
   const [animated, setAnimated] = useState(false)
@@ -201,15 +202,15 @@ function NoLogedNavbar({ showNavbar, setShowNavbar }) {
     }
   }
 
-  let isPremium = true
-  let profilePicture = 'https://fastly.picsum.photos/id/1009/200/200.jpg?hmac=2D10SFaYliFjzL4jp_ZjLmZ1_2jaJw89CntiJGjdlGE'
+  
+ 
   return (
     <>
 
 
       <nav className={`sidebar-container ${showNavbar && 'mostrar'}`}>
 
-        <img className={`profile-picture ${animated && 'profile-picture-animated'}`} src={profilePicture} onClick={handleShowNavbar} alt="Profile" />
+      <FontAwesomeIcon icon={faUser} className={`profile-picture ${animated && 'profile-picture-animated'}`}  onClick={handleShowNavbar} alt="Profile" />
 
         <div className={` ${animated && 'animated'}`}>
           <div className="login">

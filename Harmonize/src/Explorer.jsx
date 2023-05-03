@@ -4,13 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import './css/explorer.css'
-export function Explorer() {
+export function Explorer({serverURL}) {
 
     const [data, setdata] = useState({})
     const [load, setLoad] = useState(false)
 
     if (!load) {
-        fetch(`http://localhost:3000/explorer`, {
+        fetch(`${serverURL}/explorer`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -48,7 +48,7 @@ function SongCard({ song }) {
   
     }
     const addTolist=(playlist)=>{
-        fetch(`http://localhost:3000/api/playlistAdd/${playlist.IdPlaylist.S}`, {
+        fetch(`${serverURL}/api/playlistAdd/${playlist.IdPlaylist.S}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

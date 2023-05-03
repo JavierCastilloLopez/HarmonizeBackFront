@@ -18,7 +18,7 @@ export function UploadSong() {
 
 
 
-function FileUploader() {
+function FileUploader({serverURL}) {
     const generosMusicales = ["rock", "pop", "jazz", "blues", "hip hop", "electrónica", "reggae", "folk", "country", "clásica"];
     const [token, setToken, removeToken] = useCookies(['playlist']);
     const [titulo, setTitulo] = useState("");
@@ -60,7 +60,7 @@ function FileUploader() {
         formData.append('titulo', titulo);
         formData.append('duration', duration);
 
-        fetch('http://localhost:3000/api/upload', {
+        fetch(`${serverURL}/api/upload`, {
             method: 'POST',
             headers: {
 

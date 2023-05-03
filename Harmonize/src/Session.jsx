@@ -4,7 +4,7 @@ import './css/Session.css'
 import { useNavigate } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
-export function Login({ setLoged }) {
+export function Login({ setLoged,serverURL }) {
     const [email, setEmail] = useState('');
     const [token, setToken, removeToken] = useCookies(['token']);
     const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ export function Login({ setLoged }) {
         let values = { email, password }
         try {
             await schema.validate(values, { abortEarly: false }).then(() => {
-                fetch('http://localhost:3000/login', {
+                fetch(`${serverURL}/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ export function Login({ setLoged }) {
 
 
 
-export function Register() {
+export function Register({serverURL}) {
     const [values, setValues] = useState({
         email: '',
         name: '',
@@ -158,7 +158,7 @@ export function Register() {
 
         schema.validate(values, { abortEarly: false })
             .then(() => {
-                fetch('http://localhost:3000/register', {
+                fetch(`${serverURL}/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
