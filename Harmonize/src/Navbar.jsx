@@ -20,7 +20,7 @@ export function Navbar({ showNavbar, setShowNavbar,serverURL }) {
 function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
 
   const [animated, setAnimated] = useState(false)
-  const [playlists, setdata] = useState([])
+  
   const [load, setLoad] = useState(false)
   const [token, setToken, removeToken] = useCookies(['playlist']);
   console.log(serverURL)
@@ -32,19 +32,21 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
       }
     })
       .then(response => response.json())
-      .then((list) => {
+      .then(async (list) => {
 
         // Aquí puedes trabajar con la respuesta en formato JSON
-        setdata(list)
+        
+        
+       setToken('playlist', list)
+       console.log(list)
         setLoad(true)
-        setToken('playlist', list)
-        console.log(token)
 
       }).catch((err) => console.log(err))
 
   }
 
   const animar = () => {
+    setLoad(false)
     setAnimated(true)
     setTimeout(() => setAnimated(false), 1000)
   }
@@ -69,7 +71,7 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
 
           <div className={`profile-info ${animated && 'animated'}`}>
             <h3 className="name">{token.user.name[0].toUpperCase() + token.user.name.substring(1).toLowerCase()}</h3>
-            <p className="premium" onClick={() => removeToken("token")}>Salir</p>
+            <p className="premium" onClick={() => {removeToken("token")}}>Salir</p>
           </div>
         </div>
         <ul className={` ${animated && 'animated'} `}>

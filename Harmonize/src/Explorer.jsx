@@ -29,7 +29,7 @@ export function Explorer({serverURL}) {
         return (
             <div>
                 {Object.keys(data).map((genre) => (
-                    <GenreSection genre={genre} songs={data[genre]} />
+                    <GenreSection genre={genre} songs={data[genre]} serverURL={serverURL}/>
                 ))}
             </div>
         );
@@ -39,7 +39,7 @@ export function Explorer({serverURL}) {
 
 
 
-function SongCard({ song }) {
+function SongCard({ song ,serverURL}) {
     const [cola, setCookie, deleteCookie] = useCookies(['colaSongs','playlist'])
  
     const [menu, setMenu] = useState(false)
@@ -142,7 +142,7 @@ function SongCard({ song }) {
     );
 };
 
-function GenreSection({ genre, songs }) {
+function GenreSection({ genre, songs,serverURL }) {
     console.log(genre)
     return (
         <div className="genre-section">
@@ -151,7 +151,7 @@ function GenreSection({ genre, songs }) {
                 <div className="song-card-container">
                     {
                         songs.map((song) => (
-                            <SongCard song={song} key={song.id} />
+                            <SongCard song={song} key={song.id} serverURL={serverURL} />
                         ))
                     }
                 </div>

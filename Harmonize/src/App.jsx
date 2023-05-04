@@ -12,7 +12,7 @@ import { Navbar } from './Navbar.jsx';
 import {UploadSong} from './UploadSong.jsx'
 function App() {
   const [showNavbar, setShowNavbar] = useState(false)
-  const serverURL='http://localhost:3000'
+  const serverURL='http://34.238.157.247'
 
  
   return (
@@ -45,7 +45,7 @@ function App() {
         
       </Routes>}
       </div>
-      {<Reproductor/>}
+      {<Reproductor serverURL={serverURL}/>}
     </Router>
   );
 }
