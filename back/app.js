@@ -1,6 +1,6 @@
 
 
-import {login,register,getExplorer} from "./importLogical.js"
+import {login,register,getExplorer,filterByName} from "./importLogical.js"
 
 
 
@@ -33,7 +33,10 @@ app.get('/explorer',(req,res)=>{
   getExplorer(req,res)
 
 })
+app.get('/filtername/:name', (req, res,next) => {
+  filterByName(req,res)
 
+})
 
 
 app.listen(port, () => {

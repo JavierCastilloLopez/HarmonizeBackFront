@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
 export function Login({ setLoged,serverURL }) {
+
     const [email, setEmail] = useState('');
     const [token, setToken, removeToken] = useCookies(['token']);
     const [password, setPassword] = useState('');
@@ -18,7 +19,7 @@ export function Login({ setLoged,serverURL }) {
             .min(8, 'La contraseña debe tener al menos 8 caracteres')
             .required('Ingrese su contraseña'),
     });
-
+console.log(token)
     const handleEmailChange = (e) => {
         setEmail(e.target.value.toLowerCase());
     };

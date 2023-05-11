@@ -207,13 +207,14 @@ export async function getPlaylistFollowed(req, res) {
     let resp
     let follow
     let create
-    if (object.playlistFollowed.SS) {
+
+    if (object.playlistFollowed) {
         follow = object.playlistFollowed.SS
 
     } else {
         follow = []
     }
-    if (object.playlistFollowed.SS) {
+    if (object.playlistCreate) {
         create = object.playlistCreate.SS
     } else {
         create = []

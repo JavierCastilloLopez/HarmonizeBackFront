@@ -1,28 +1,28 @@
 
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMusic,faUser, faList, faCheck, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
-import { useState } from "react";
+import { faMusic, faUser, faList, faCheck, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie'
 import './css/Navbar.css'
 
-export function Navbar({ showNavbar, setShowNavbar,serverURL }) {
+export function Navbar({ showNavbar, setShowNavbar, serverURL }) {
   const [token, setToken] = useCookies(['token']);
   console.log(serverURL)
   console.log(token)
   if (token.token) {
-    return (<LogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL}/>)
+    return (<LogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL} />)
 
   }
-  return (<NoLogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL}/>)
+  return (<NoLogedNavbar showNavbar={showNavbar} setShowNavbar={setShowNavbar} serverURL={serverURL} />)
 }
 
-function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
-
+function LogedNavbar({ showNavbar, setShowNavbar, serverURL }) {
+ 
   const [animated, setAnimated] = useState(false)
-  
+
   const [load, setLoad] = useState(false)
-  const [token, setToken, removeToken] = useCookies(['playlist']);
+  const [token, setToken, removeToken] = useCookies();
   console.log(serverURL)
   if (!load) {
     fetch(`${serverURL}/api/navbarPlaylist`, {
@@ -35,15 +35,16 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
       .then(async (list) => {
 
         // Aquí puedes trabajar con la respuesta en formato JSON
-        
-        
-       setToken('playlist', list)
-       console.log(list)
+
+
+        setToken('playlist', list)
+        console.log(token.playlists)
         setLoad(true)
 
       }).catch((err) => console.log(err))
 
   }
+  useEffect(() => { }, [token])
 
   const animar = () => {
     setLoad(false)
@@ -59,19 +60,25 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
     }
   }
 
-
-  let profilePicture = 'https://fastly.picsum.photos/id/1009/200/200.jpg?hmac=2D10SFaYliFjzL4jp_ZjLmZ1_2jaJw89CntiJGjdlGE'
+  const removeTokens = () => {
+    removeToken('token')
+    removeToken('playlist')
+    removeToken('user')
+    removeToken('playlists')
+    
+  }
+  
   return (
     <>
 
 
       <nav className={`sidebar-container ${showNavbar && 'mostrar'}`}>
-        <img className={`profile-picture ${animated && 'profile-picture-animated'}`} src={profilePicture} onClick={handleShowNavbar} alt="Profile" />
+        <FontAwesomeIcon icon={faUser} className={`profile-picture ${animated && 'profile-picture-animated'}`} onClick={handleShowNavbar} alt="Profile" />
         <div className="user-profile">
 
           <div className={`profile-info ${animated && 'animated'}`}>
             <h3 className="name">{token.user.name[0].toUpperCase() + token.user.name.substring(1).toLowerCase()}</h3>
-            <p className="premium" onClick={() => {removeToken("token")}}>Salir</p>
+            <p className="premium" onClick={() => { removeTokens() }}>Salir</p>
           </div>
         </div>
         <ul className={` ${animated && 'animated'} `}>
@@ -114,9 +121,9 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
                     <span className="playlist-name">{playlist.name.S}</span>
                   </Link>
                 </li>
-              )):''}
+              )) : ''}
               <li className="playlist-item" >
-                <AddPlaylist token={token}  setLoad={setLoad} serverURL={serverURL} />
+                <AddPlaylist token={token} setLoad={setLoad} serverURL={serverURL} />
               </li>
             </ul>
           </div>
@@ -131,7 +138,7 @@ function LogedNavbar({ showNavbar, setShowNavbar,serverURL }) {
 
 }
 
-function AddPlaylist({ token, setLoad,serverURL}) {
+function AddPlaylist({ token, setLoad, serverURL }) {
   const [activeForm, setActive] = useState(false)
   const [editableContent, setEditableContent] = useState("");
   console.log(serverURL)
@@ -147,24 +154,27 @@ function AddPlaylist({ token, setLoad,serverURL}) {
   }
 
   const sendPlaylist = (serverURL) => {
-    let body=`{"name":"${editableContent}"}`
-    console.log(body)
     handleForm()
-    fetch(`${serverURL}/api/playlist`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': `${token.token}`
+    if (editableContent.trim() != '') {
+      let body = `{"name":"${editableContent.trim()}"}`
+      console.log(body)
+      
+      fetch(`${serverURL}/api/playlist`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': `${token.token}`
 
-      },
-      body: body
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response)
-        setLoad(false)
+        },
+        body: body
       })
-      .catch(err => console.error(err))
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          setLoad(false)
+        })
+        .catch(err => console.error(err))
+    }
   }
 
   if (!activeForm) {
@@ -180,14 +190,14 @@ function AddPlaylist({ token, setLoad,serverURL}) {
     return (
 
       <div className='playlist-item-a'>
-        <FontAwesomeIcon icon={faCheck} onClick={()=>sendPlaylist(serverURL)} /> <span className="playlist-name" contenteditable="true" onInput={handleEditableContentChange}>Escribe el nombre</span>
+        <FontAwesomeIcon icon={faCheck} onClick={() => sendPlaylist(serverURL)} /> <span className="playlist-name" contenteditable="true" onInput={handleEditableContentChange}>Escribe el nombre</span>
       </div>
 
 
     )
   }
 }
-function NoLogedNavbar({ showNavbar, setShowNavbar,serverURL}) {
+function NoLogedNavbar({ showNavbar, setShowNavbar, serverURL }) {
   const navegador = useNavigate()
 
   const [animated, setAnimated] = useState(false)
@@ -204,15 +214,15 @@ function NoLogedNavbar({ showNavbar, setShowNavbar,serverURL}) {
     }
   }
 
-  
- 
+
+
   return (
     <>
 
 
       <nav className={`sidebar-container ${showNavbar && 'mostrar'}`}>
 
-      <FontAwesomeIcon icon={faUser} className={`profile-picture ${animated && 'profile-picture-animated'}`}  onClick={handleShowNavbar} alt="Profile" />
+        <FontAwesomeIcon icon={faUser} className={`profile-picture ${animated && 'profile-picture-animated'}`} onClick={handleShowNavbar} alt="Profile" />
 
         <div className={` ${animated && 'animated'}`}>
           <div className="login">

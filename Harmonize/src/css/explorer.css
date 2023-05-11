@@ -1,3 +1,5 @@
+
+
 .genre-section {
     display: flex;
     padding: 20px;
@@ -330,3 +332,51 @@ width: 100%;
         transform: translateY(0px);
     }
 }
+
+
+.group {
+    margin: auto;
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 300px;
+    margin-top: 15px;
+    padding: 10px;
+    
+    background-color:  #f5f5f5eb;
+  }
+  
+  .group> .input {
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 20px 0px 20px 0px;
+    outline: none;
+    background-color: #c8e5ff;
+    color: #0d0c22;
+    
+    transition: .3s ease;
+  }
+  
+  .group>.input::placeholder {
+    color: #777;
+  }
+  .search {
+    display: block;
+    max-width: 320px;
+    
+    z-index: 999;
+    background-color: #f5f5f5eb;
+    margin:auto;
+    
+    
+  }
+  
+  
+  
+  
+  
+  

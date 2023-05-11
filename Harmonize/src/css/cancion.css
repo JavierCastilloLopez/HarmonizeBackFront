@@ -219,3 +219,59 @@ img {
     align-items: first baseline;
   }
 }
+
+.search .play-button,
+.search .song-container p,
+.search .song-like {
+    display: none;
+  }
+
+  .search  .song-container {
+    font-size: 12px;
+    width: 280px;
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+  }
+
+  .search  .song-container.menu {
+    display: inline-flex;
+    
+    width: 280px;
+    align-items: center;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #ffffff;
+
+    border-radius: 5px;
+
+  }
+
+  .search  .info {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    margin: 0 !important;
+  }
+
+  .search  h1,
+  .search   h2 {
+    margin: 0;
+    height: 20px;
+    width:150px;
+    font-size: 12.5px;
+  }
+
+  .search   .action-menu {
+    display: block;
+    background-color: white;
+    border: 0;
+  }
+
+  .search  .song-container div {
+    margin: 0px 12px;
+    justify-content: center;
+    align-items: first baseline;
+  }

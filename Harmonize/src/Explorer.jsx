@@ -3,6 +3,8 @@ import { faAdd, faPlay, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { mayuscula } from './help'
+import { Buscador } from './buscador'
 import './css/explorer.css'
 export function Explorer({serverURL}) {
 
@@ -28,6 +30,7 @@ export function Explorer({serverURL}) {
         console.log(data)
         return (
             <div>
+                <Buscador serverURL={serverURL}/>
                 {Object.keys(data).map((genre) => (
                     <GenreSection genre={genre} songs={data[genre]} serverURL={serverURL}/>
                 ))}
@@ -87,7 +90,7 @@ function SongCard({ song ,serverURL}) {
 
 
 
-                        <strong>{song.title.S}</strong>
+                        <strong>{mayuscula(song.title.S)}</strong>
                     </div>
                 </div>
                 <div className="front">
@@ -102,7 +105,7 @@ function SongCard({ song ,serverURL}) {
                     </div>
 
                     <div className="front-content">
-                        <small className="badge">{song.title.S}</small>
+                        <small className="badge">{mayuscula(song.title.S)}</small>
 
                         <FontAwesomeIcon className="badge-icon" icon={faPlay} onClick={pushNext}></FontAwesomeIcon>
                         <div className="description">

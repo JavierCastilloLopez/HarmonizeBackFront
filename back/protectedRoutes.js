@@ -23,10 +23,7 @@ route.get('/navbarPlaylist', (req, res,next) => {
   getPlaylistFollowed(req,res)
 
 })
-route.get('/filtername/:name', (req, res,next) => {
-  filterByName(req,res)
 
-})
 
 
 route.post('/playlistAdd/:id', (req, res,next) => {

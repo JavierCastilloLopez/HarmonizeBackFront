@@ -1,0 +1,58 @@
+.config img {
+    border-radius: 50%;
+    width: 120px;
+
+}
+.PerfilImagen{
+    
+    display: block;
+    position: relative;
+    
+    
+}
+.inCircle {
+    position: absolute;
+    bottom: 10px;
+    left: 95px;
+    background-color:  #1da1f2;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+}
+.inCircle svg{
+    position: absolute;
+    left: 4px;
+    bottom: 8px;
+    width: 80%;
+}
+.userData>div>div {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    margin: auto;
+
+}
+
+.userData {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin-top: 30px;
+}
+
+.userData p {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.userData>div {
+    padding: 15px;
+}
+
+.config {
+
+    padding: 5%;
+}

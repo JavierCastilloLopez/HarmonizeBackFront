@@ -5,6 +5,9 @@ import { Cancion } from './Cancion.jsx'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+
 export function Playlist({serverURL}) {
   const [load, setLoad] = useState(false)
   const [canciones, setCanciones] = useState({
@@ -12,6 +15,14 @@ export function Playlist({serverURL}) {
       S:""}})
 
   const [token, setToken, removeToken] = useCookies(['token']);
+  
+  const PlaylistToCola=()=>{
+    
+    console.log(token.colaSongs)
+    console.log(canciones.Canciones.SS)
+    setToken('colaSongs',canciones.Canciones.SS)
+  }
+
 
   const { idPlaylist } = useParams()
   useEffect(() => {
@@ -42,8 +53,9 @@ if(load)
 
       <div>
         <h1>
-          {canciones.name.S}
+          {canciones.name.S} <FontAwesomeIcon icon={faPlay} onClick={PlaylistToCola}></FontAwesomeIcon>
         </h1>
+        
 
       </div>
       {canciones.Canciones.SS.map(cancion =>

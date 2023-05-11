@@ -18,6 +18,8 @@ export function Reproductor({serverURL}) {
   const [cookies, setCola, removeCola] = useCookies(['colaSongs']);
 
   useEffect(() => {
+   if(cookies.colaSongs)
+    setCanciones(cookies.colaSongs)
  }, [cookies])
  
 
@@ -28,9 +30,10 @@ export function Reproductor({serverURL}) {
  }
   const nextSong=()=>{
     if(tipe>0){
-      if(indice<canciones.length){
+      if(canciones.length-1>indice){
         setIndice(indice+1)
         console.log(canciones.length)
+        console.log(indice)
       }else{
         setIndice(0)
       }

@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from 'react-cookie'
-export function UploadSong() {
+export function UploadSong({serverURL}) {
 
     return (
 
-        <FileUploader></FileUploader>
+        <FileUploader serverURL={serverURL}></FileUploader>
 
     )
 
@@ -23,7 +23,7 @@ function FileUploader({serverURL}) {
     const [token, setToken, removeToken] = useCookies(['playlist']);
     const [titulo, setTitulo] = useState("");
     const [artista, setArtista] = useState("");
-    const [genero, setGenero] = useState("");
+    const [genero, setGenero] = useState("Rock");
     const [imagenCancion, setImagenCancion] = useState(null);
     const [cancion, setCancion] = useState(null);
     const [duration, setDuration] = useState('');
@@ -57,7 +57,7 @@ function FileUploader({serverURL}) {
         formData.append('artista', artista);
         formData.append('genero', genero);
         formData.append('imagenCancion', imagenCancion);
-        formData.append('titulo', titulo);
+        formData.append('titulo', titulo.toLowerCase());
         formData.append('duration', duration);
 
         fetch(`${serverURL}/api/upload`, {

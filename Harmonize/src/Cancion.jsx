@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faPlay, faEllipsisVertical, faList } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import {useCookies} from "react-cookie"
+import { mayuscula } from './help';
 
 export function Cancion({ cancion }) {
 
@@ -51,8 +52,8 @@ export function Cancion({ cancion }) {
 				</div>
 				<div className="song-photo" onClick={pushNext}><img src={cancion.image.S} /></div>
 				<div className='info'>
-					<div><h1>{cancion.title.S}</h1></div>
-					<div><h2>{cancion.artist.S}</h2></div>
+					<div><h1>{mayuscula(cancion.title.S)}</h1></div>
+					<div><h2>{mayuscula(cancion.artist.S)}</h2></div>
 					<div> <p>{cancion.time.S}</p></div>
 				</div>
 				
