@@ -1,4 +1,4 @@
-import { useState ,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import './css/reproductor.css'
 
@@ -7,44 +7,51 @@ import { faPause, faPlay, faBackward, faForward, faVolumeMute, faVolumeUp } from
 import { useCookies } from "react-cookie";
 
 
-export function Reproductor({serverURL}) {
-  const [canciones,setCanciones]=useState([])
+export function Reproductor({ serverURL }) {
+  const [canciones, setCanciones] = useState([])
   const [indice, setIndice] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [volume, setVolume] = useState([false, 0]);
   const [tipe, setTipe] = useState(1);
-  
+
   const [cookies, setCola, removeCola] = useCookies(['colaSongs']);
 
   useEffect(() => {
-   if(cookies.colaSongs)
+    if (cookies.colaSongs)
+      setCanciones(cookies.colaSongs)
+  }, [cookies])
+
+
+  if (cookies.colaSongs && canciones[0] == undefined) {
+    console.log(cookies.colaSongs)
     setCanciones(cookies.colaSongs)
- }, [cookies])
- 
 
- if(cookies.colaSongs && canciones[0]==undefined){
-  console.log(cookies.colaSongs)
-  setCanciones(cookies.colaSongs)
-
- }
-  const nextSong=()=>{
-    if(tipe>0){
-      if(canciones.length-1>indice){
-        setIndice(indice+1)
-        console.log(canciones.length)
-        console.log(indice)
-      }else{
+  }
+  const nextSong = () => {
+    const audio = document.getElementById("audio-element");
+    if (tipe > 0) {
+      if (canciones.length - 1 > indice) {
+        setIndice(indice + 1)
+        setTimeout(() => {
+          audio.pause();
+          audio.play();
+        },1000)
+      } else {
         setIndice(0)
+        setTimeout(() => {
+          audio.pause();
+          audio.play();
+        },1000)
       }
-    }else{
-      setIndice(parseInt(Math.random()*canciones.length))
+    } else {
+      setIndice(parseInt(Math.random() * canciones.length))
     }
 
 
   }
 
-  // Código para cambiar el volumen
+  
   const handleVolumeChange = (event) => {
     const audio = document.getElementById("audio-element");
     audio.volume = event.target.value / 11;
@@ -75,10 +82,10 @@ export function Reproductor({serverURL}) {
     const currentTime = audio.currentTime;
     const duration = audio.duration;
     setProgress(currentTime / duration * 100);
-    if(currentTime==duration){
+    if (currentTime == duration) {
       nextSong()
     }
-   
+
   };
   const handleSkipBackward = () => {
     // Código para saltar hacia atrás
@@ -88,10 +95,10 @@ export function Reproductor({serverURL}) {
 
   const handleSkipForward = () => {
     nextSong()
-    
-    
+
+
   };
-  
+
   if (canciones[indice])
     return (
       <>
@@ -107,7 +114,7 @@ export function Reproductor({serverURL}) {
             id="audio-element"
             src={canciones[indice].rutaFile.S}
             onTimeUpdate={handleTimeUpdate}
-          
+
           />
           <div className="controls">
             <div>
@@ -143,7 +150,7 @@ export function Reproductor({serverURL}) {
               </button>
               <div className="volume-slider">
                 <input type="range" id="volume" name="volume"
-                  min="0" max="11" onChange={handleVolumeChange}  />
+                  min="0" max="11" onChange={handleVolumeChange} />
 
               </div>
             </div>

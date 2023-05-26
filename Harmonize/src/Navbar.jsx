@@ -61,11 +61,12 @@ function LogedNavbar({ showNavbar, setShowNavbar, serverURL }) {
   }
 
   const removeTokens = () => {
+    console.log(token)
     removeToken('token')
     removeToken('playlist')
     removeToken('user')
     removeToken('playlists')
-    
+    removeToken('colaSongs')
   }
   
   return (
@@ -92,18 +93,7 @@ function LogedNavbar({ showNavbar, setShowNavbar, serverURL }) {
               <span>Subir tu musica</span>
             </NavLink>
           </li>
-          {/*   <li>
-            <NavLink to="/albumes" activeClassName="active">
-              <FontAwesomeIcon icon={faList} />
-              <span>Álbumes</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/artistas" activeClassName="active">
-              <FontAwesomeIcon icon={faUser} />
-              <span>Artistas</span>
-            </NavLink>
-  </li>*/}
+        
         </ul>
         {(
           <div className={`playlist-container ${animated && 'animated'}`}>
